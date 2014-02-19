@@ -5,3 +5,8 @@ html, body, #map {
     padding:0px;
     margin:0px;
 } 
+
+/* smaller popups */
+.leaflet-popup-content p, .leaflet-popup-content h3 {
+    margin: 0;
+}
