@@ -10,11 +10,5 @@
     "name": "Daniel Schep",
     "url": "http://schep.me/"
   },
-  "type": "privileged",
-  "default_locale": "en",
-  "permissions": {
-    "systemXHR": {
-      "description": "Required to connect to Capital Bikeshare's API."
-    }
-  }
+  "default_locale": "en"
 }
