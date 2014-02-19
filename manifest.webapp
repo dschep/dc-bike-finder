@@ -1,0 +1,20 @@
+{
+  "version": "0.1",
+  "name": "DC Bike Finder",
+  "description": "Find Capital Bikeshare bikes",
+  "launch_path": "/index.html",
+  "icons": {
+    "128": "/icon.png"
+  },
+  "developer": {
+    "name": "Daniel Schep",
+    "url": "http://schep.me/"
+  },
+  "type": "privileged",
+  "default_locale": "en",
+  "permissions": {
+    "systemXHR": {
+      "description": "Required to connect to Capital Bikeshare's API."
+    }
+  }
+}

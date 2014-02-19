@@ -1,0 +1,32 @@
+(function() {
+    var map = L.map('map').setView([38.91, -77.04], 11);
+
+    L.tileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="http://openstreetmap.org">OpenCycleMap</a>, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
+                }).addTo(map)
+
+    var xhr = new XMLHttpRequest({ mozSystem: true });
+    xhr.onload = function(e) {
+        if (xhr.status === 200 || xhr.status === 0) {
+            console.log(xhr.status)
+            $.each(xhr.responseXML.querySelectorAll('station'), function(i, node) {
+                L.marker([
+                    node.querySelector('lat').textContent,
+                    node.querySelector('long').textContent
+                    ]).addTo(map)
+                    .bindPopup('<div>' +
+                        '<h3>' + node.querySelector('name').textContent + '</h3>' +
+                        '<p>Bikes: ' + node.querySelector('nbBikes').textContent + ' - ' +
+                        'Slots: ' + node.querySelector('nbEmptyDocks').textContent + '</p>' +
+                        '</div>');
+            });
+        } else {
+            alert('Failed to retrieve data from Capital Bikeshare')
+        }
+    }
+    xhr.open('GET',
+        'http://www.capitalbikeshare.com/data/stations/bikeStations.xml',
+        true);
+    xhr.responseType = 'document';
+    xhr.send();
+})()
