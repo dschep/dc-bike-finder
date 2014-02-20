@@ -1,5 +1,5 @@
 {
-  "version": "0.3",
+  "version": "0.4.0",
   "name": "DC Bike Finder",
   "description": "Find Capital Bikeshare bikes",
   "launch_path": "/index.html",
