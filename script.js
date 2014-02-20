@@ -5,7 +5,7 @@
                     attribution: '&copy; <a href="http://openstreetmap.org">OpenCycleMap</a>, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
                 }).addTo(map)
 
-    var xhr = new XMLHttpRequest({ mozSystem: true });
+    var xhr = new XMLHttpRequest();
     xhr.onload = function(e) {
         if (xhr.status === 200 || xhr.status === 0) {
             var markers = L.markerClusterGroup();
