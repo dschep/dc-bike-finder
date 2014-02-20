@@ -32,6 +32,26 @@
         xhr.send();
     };
 
+
+    var ReloadControl = L.Control.extend({
+        options: {
+            position: 'topright'
+        },
+
+        onAdd: function (map) {
+            var container = L.DomUtil.create('div', 'reload-control');
+            L.DomUtil.create('span', 'icon', container);
+
+            L.DomEvent
+                .addListener(container, 'click', L.DomEvent.stop)
+                .addListener(container, 'click', update_markers, this);
+            L.DomEvent.disableClickPropagation(container);
+
+            return container;
+        }
+    });
+
+
     map = L.map('map').setView([38.91, -77.04], 11);
 
     L.tileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png', {
@@ -39,6 +59,8 @@
                 }).addTo(map)
 
     L.control.locate().addTo(map);
+
+    map.addControl(new ReloadControl());
 
     update_markers();
     window.setTimeout(update_markers, 60000);

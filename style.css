@@ -10,3 +10,17 @@ html, body, #map {
 .leaflet-popup-content p, .leaflet-popup-content h3 {
     margin: 0;
 }
+
+.reload-control {
+    height: 30px;
+    width: 30px;
+    background: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.reload-control .icon {
+    height: 30px;
+    width: 30px;
+    position: absolute;
+    background-image: url(reload-icon.png);
+}
