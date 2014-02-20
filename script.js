@@ -2,10 +2,13 @@
     var map, markers;
 
     var update_markers = function() {
+        document.querySelector('.reload-control .icon').classList.add('spin');
+
         var xhr = new XMLHttpRequest();
         xhr.onload = function(e) {
             if (xhr.status === 200 || xhr.status === 0) {
                 if(markers && map) map.removeLayer(markers);
+                document.querySelector('.reload-control .icon').classList.remove('spin');
 
                 markers = L.markerClusterGroup();
 
