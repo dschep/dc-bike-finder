@@ -41,4 +41,5 @@
     L.control.locate().addTo(map);
 
     update_markers();
+    window.setTimeout(update_markers, 60000);
 })()
