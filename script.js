@@ -9,17 +9,23 @@
     xhr.onload = function(e) {
         if (xhr.status === 200 || xhr.status === 0) {
             console.log(xhr.status)
+
+            var markers = L.markerClusterGroup();
+
             $.each(xhr.responseXML.querySelectorAll('station'), function(i, node) {
-                L.marker([
+                var marker = L.marker([
                     node.querySelector('lat').textContent,
                     node.querySelector('long').textContent
-                    ]).addTo(map)
-                    .bindPopup('<div>' +
+                    ]);
+                marker.bindPopup('<div>' +
                         '<h3>' + node.querySelector('name').textContent + '</h3>' +
                         '<p>Bikes: ' + node.querySelector('nbBikes').textContent + ' - ' +
                         'Slots: ' + node.querySelector('nbEmptyDocks').textContent + '</p>' +
                         '</div>');
+                markers.addLayer(marker);
             });
+
+            map.addLayer(markers);
         } else {
             alert('Failed to retrieve data from Capital Bikeshare')
         }
