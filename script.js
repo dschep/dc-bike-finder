@@ -1,9 +1,13 @@
 (function() {
+    var map, markers;
+
     var update_markers = function() {
         var xhr = new XMLHttpRequest();
         xhr.onload = function(e) {
             if (xhr.status === 200 || xhr.status === 0) {
-                var markers = L.markerClusterGroup();
+                if(markers && map) map.removeLayer(markers);
+
+                markers = L.markerClusterGroup();
 
                 $.each(xhr.responseXML.querySelectorAll('station'), function(i, node) {
                     var marker = L.marker([
@@ -28,7 +32,7 @@
         xhr.send();
     };
 
-    var map = L.map('map').setView([38.91, -77.04], 11);
+    map = L.map('map').setView([38.91, -77.04], 11);
 
     L.tileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png', {
                     attribution: '&copy; <a href="http://openstreetmap.org">OpenCycleMap</a>, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
