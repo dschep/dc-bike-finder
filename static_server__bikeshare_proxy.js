@@ -32,8 +32,6 @@ http.createServer(function(request, response) {
       proxy_request.end();
     }); 
   } else {
-    console.log(uri)
-    console.log(request.headers['host'])
     path.exists(filename, function(exists) {
       if(!exists) {
 	response.writeHead(404, {"Content-Type": "text/plain"});
