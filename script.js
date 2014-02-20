@@ -8,8 +8,6 @@
     var xhr = new XMLHttpRequest({ mozSystem: true });
     xhr.onload = function(e) {
         if (xhr.status === 200 || xhr.status === 0) {
-            console.log(xhr.status)
-
             var markers = L.markerClusterGroup();
 
             $.each(xhr.responseXML.querySelectorAll('station'), function(i, node) {
