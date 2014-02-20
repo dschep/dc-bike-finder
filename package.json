@@ -23,5 +23,8 @@
   "homepage": "https://github.com/dschep/dc-bike-finder",
   "dependencies": {
     "mime": "^1.2.11"
+  },
+  "engines": {
+    "node": "0.10.x"
   }
 }
