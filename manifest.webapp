@@ -1,5 +1,5 @@
 {
-  "version": "0.1",
+  "version": "0.2",
   "name": "DC Bike Finder",
   "description": "Find Capital Bikeshare bikes",
   "launch_path": "/index.html",
@@ -10,5 +10,10 @@
     "name": "Daniel Schep",
     "url": "http://schep.me/"
   },
-  "default_locale": "en"
+  "default_locale": "en",
+  "permissions": {
+    "geolocation": {
+      "description": "Required to know find bikes near you"
+    }
+  }
 }

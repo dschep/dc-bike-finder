@@ -5,6 +5,8 @@
                     attribution: '&copy; <a href="http://openstreetmap.org">OpenCycleMap</a>, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
                 }).addTo(map)
 
+    L.control.locate().addTo(map);
+
     var xhr = new XMLHttpRequest();
     xhr.onload = function(e) {
         if (xhr.status === 200 || xhr.status === 0) {
