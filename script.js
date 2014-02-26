@@ -42,8 +42,9 @@
         },
 
         onAdd: function (map) {
-            var container = L.DomUtil.create('div', 'reload-control');
-            L.DomUtil.create('span', 'icon', container);
+            var container = L.DomUtil.create('div', 'reload-control leaflet-bar');
+            var inner_container = L.DomUtil.create('a', 'leaflet-bar-part leaflet-bar-part-single', container);
+            L.DomUtil.create('div', 'icon', inner_container);
 
             L.DomEvent
                 .addListener(container, 'click', L.DomEvent.stop)

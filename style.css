@@ -11,18 +11,16 @@ html, body, #map {
     margin: 0;
 }
 
-.reload-control {
-    height: 30px;
-    width: 30px;
-    background: white;
-    border-radius: 4px;
-    cursor: pointer;
-}
 .reload-control .icon {
+    background-image: url(reload-icon.png);
+    height: 26px;
+    width: 26px;
+    background-size: 26px;
+}
+.leaflet-touch .reload-control .icon {
     height: 30px;
     width: 30px;
-    position: absolute;
-    background-image: url(reload-icon.png);
+    background-size: 30px;
 }
 
 .spin {
