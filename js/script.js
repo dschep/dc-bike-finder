@@ -61,8 +61,11 @@
     map = L.map('map').setView([38.91, -77.04], 11);
 
     L.tileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png', {
-                    attribution: '&copy; <a href="http://openstreetmap.org">OpenCycleMap</a>, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
+                    attribution: '&copy; <a target="_blank" href="http://openstreetmap.org">OpenCycleMap</a>, <a target="_blank" href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
                 }).addTo(map)
+
+    // hacking this in JS bc of Leaflet/Leaflet#466
+    document.querySelector('.leaflet-control-attribution a').target = '_blank';
 
     L.control.locate().addTo(map);
 
