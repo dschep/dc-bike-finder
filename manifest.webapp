@@ -1,11 +1,11 @@
 {
-  "version": "0.6.0",
+  "version": "0.7.0",
   "name": "DC Bike Finder",
   "description": "Find Capital Bikeshare bikes",
   "launch_path": "/index.html",
   "icons": {
-    "60": "/icon.png",
-    "128": "/icon128.png"
+    "60": "/img/icon.png",
+    "128": "/img/icon128.png"
   },
   "developer": {
     "name": "Daniel Schep",

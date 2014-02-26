@@ -12,7 +12,7 @@ html, body, #map {
 }
 
 .reload-control .icon {
-    background-image: url(reload-icon.png);
+    background-image: url(../img/reload-icon.png);
     height: 26px;
     width: 26px;
     background-size: 26px;
