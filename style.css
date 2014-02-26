@@ -62,3 +62,9 @@ html, body, #map {
         transform:rotate(360deg);
     }
 }
+
+/* override L.Control.Locate's mobile appearance */
+.leaflet-touch .leaflet-control-locate {
+    border-width: 4px;
+    border: 4px solid rgba(0, 0, 0, 0.298039);
+}
