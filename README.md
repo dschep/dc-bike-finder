@@ -1,4 +1,4 @@
-# ![DC Bike Finder](https://raw.github.com/dschep/dc-bike-finder/master/icon.png) DC Bike Finder
+# ![DC Bike Finder](https://raw.github.com/dschep/dc-bike-finder/master/img/icon.png) DC Bike Finder
 
 Hosted version at: http://dc-bike-finder.herokuapp.com/
 
