@@ -19,7 +19,7 @@
 
     <content src="index.html" />
 
-    <icon src="img/icon128.png" />
+    <icon src="img/FxOS/icon128.png" />
 
     <access origin="*" />
 

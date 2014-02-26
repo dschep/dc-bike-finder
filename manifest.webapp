@@ -4,8 +4,8 @@
   "description": "Find Capital Bikeshare bikes",
   "launch_path": "/index.html",
   "icons": {
-    "60": "/img/icon.png",
-    "128": "/img/icon128.png"
+    "60": "/img/FxOS/icon.png",
+    "128": "/img/FxOS/icon128.png"
   },
   "developer": {
     "name": "Daniel Schep",
