@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<widget xmlns = "http://www.w3.org/ns/widgets"
+
+    xmlns:gap   = "http://phonegap.com/ns/1.0"
+    id          = "me.schep.dc-bike-finder"
+    version     = "0.5.0" >
+
+    <preference name="phonegap-version" value="3.1.0" />
+
+    <name>DC Bike Finder</name>
+
+    <description>
+        Find Capital Bikeshare bikes.
+    </description>
+
+    <author href="http://schep.me" email="dschep@gmail.com">
+        Daniel Schep
+    </author>
+
+    <content src="index.html" />
+
+    <icon src="icon.png" />
+
+    <access origin="*" />
+
+    <preference name="permissions" value="none"/>
+
+    <feature name="http://api.phonegap.com/1.0/geolocation"/>
+    
+</widget>

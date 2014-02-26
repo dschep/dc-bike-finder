@@ -30,7 +30,9 @@
                 alert('Failed to retrieve data from Capital Bikeshare')
             }
         }
-        xhr.open('GET', '/data/stations/bikeStations.xml', true);
+        xhr.open('GET', (window.location.origin != 'file://' ? '' :
+                         'http://www.capitalbikeshare.com') +
+                 '/data/stations/bikeStations.xml', true);
         xhr.responseType = 'document';
         xhr.send();
     };
