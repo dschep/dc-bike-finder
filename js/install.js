@@ -1,7 +1,7 @@
 (function() {
     if (!navigator.mozApps) return;
 
-    var manifest_url = location.href + 'manifest.webapp';
+    var manifest_url = location.protocol + '//' + location.host + '/manifest.webapp';
 
     var installCheck = navigator.mozApps.checkInstalled(manifest_url);
 
