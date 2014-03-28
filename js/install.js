@@ -6,7 +6,12 @@
     var installCheck = navigator.mozApps.checkInstalled(manifest_url);
 
     installCheck.onsuccess = function() {
-      if(!installCheck.result)
-        window.navigator.mozApps.install(manifest_url);
+        if(!installCheck.result) {
+            var install_button = document.querySelector('#install');
+            install_button.style.display = 'block';
+            install_button.addEventListener('click', function() {
+                window.navigator.mozApps.install(manifest_url);
+            });
+        }
     };
 })()

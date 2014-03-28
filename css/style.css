@@ -1,3 +1,8 @@
+/* weiirdd.. */
+html {
+    font-size: 62.5%;
+}
+
 /* full page! */
 html, body, #map {
     height:100%;
@@ -5,6 +10,16 @@ html, body, #map {
     padding:0px;
     margin:0px;
 } 
+
+/* offset for header */
+#map {
+    margin-top: -5.001rem;
+}
+.leaflet-top {
+    top: 5rem;
+}
+
+#reload span { display: inline-block; }
 
 /* smaller popups */
 .leaflet-popup-content p, .leaflet-popup-content h3 {

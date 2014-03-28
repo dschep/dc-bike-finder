@@ -2,13 +2,13 @@
     var map, markers;
 
     var update_markers = function() {
-        document.querySelector('.reload-control .icon').classList.add('spin');
+        document.querySelector('#reload span').classList.add('spin');
 
         var xhr = new XMLHttpRequest();
         xhr.onload = function(e) {
             if (xhr.status === 200 || xhr.status === 0) {
                 if(markers && map) map.removeLayer(markers);
-                document.querySelector('.reload-control .icon').classList.remove('spin');
+                document.querySelector('#reload span').classList.remove('spin');
 
                 markers = L.markerClusterGroup();
 
@@ -37,6 +37,7 @@
         xhr.send();
     };
 
+    document.querySelector('#reload').addEventListener('click', update_markers);
 
     var ReloadControl = L.Control.extend({
         options: {
@@ -68,8 +69,6 @@
     document.querySelector('.leaflet-control-attribution a').target = '_blank';
 
     L.control.locate().addTo(map);
-
-    map.addControl(new ReloadControl());
 
     update_markers();
     window.setTimeout(update_markers, 60000);
