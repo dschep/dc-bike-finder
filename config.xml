@@ -5,7 +5,7 @@
     id          = "me.schep.dc-bike-finder"
     version     = "0.7.0" >
 
-    <preference name="phonegap-version" value="3.1.0" />
+    <preference name="phonegap-version" value="3.3.0" />
 
     <name>DC Bike Finder</name>
 
