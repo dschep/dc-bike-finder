@@ -13,8 +13,8 @@ http.createServer(function(request, response) {
     , filename = path.join(process.cwd(), uri);
   
 
-  if (uri == '/data/stations/bikeStations.xml') {
-    var proxy = http.createClient(80, 'www.capitalbikeshare.com')
+  if (uri == '/stations/stations.xml') {
+    var proxy = http.createClient(80, 'feeds.capitalbikeshare.com')
     var proxy_request = proxy.request(request.method, request.url, request.headers);
     proxy_request.addListener('response', function (proxy_response) {
       proxy_response.addListener('data', function(chunk) {
