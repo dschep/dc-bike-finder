@@ -31,8 +31,8 @@
             }
         }
         xhr.open('GET', (window.location.origin != 'file://' ? '' :
-                         'http://www.capitalbikeshare.com') +
-                 '/data/stations/bikeStations.xml', true);
+                         'http://feeds.capitalbikeshare.com') +
+                 '/stations/stations.xml', true);
         xhr.responseType = 'document';
         xhr.send();
     };
