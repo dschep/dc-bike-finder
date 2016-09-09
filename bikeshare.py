@@ -11,7 +11,6 @@ BIKESHARE_URL = 'http://feeds.capitalbikeshare.com/stations/stations.xml'
 # Setup Flask app.
 app = Flask(__name__)
 app.static_folder = '.'  # just serve up from root
-app.debug = True
 
 
 # index
