@@ -60,14 +60,16 @@
 
     map = L.map('map').setView([38.91, -77.04], 11);
 
-    L.tileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png', {
-                    attribution: '&copy; <a target="_blank" href="http://openstreetmap.org">OpenCycleMap</a>, <a target="_blank" href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
-                }).addTo(map)
+    L.tileLayer('https://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey={apikey}', {
+        attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        apikey: '43a3528946814e018e2667b156d87992',
+        maxZoom: 22
+    }).addTo(map)
 
     // hacking this in JS bc of Leaflet/Leaflet#466
     document.querySelector('.leaflet-control-attribution a').target = '_blank';
 
-    L.control.locate().addTo(map);
+    var lc = L.control.locate({locateOptions: {maxZoom: 16}}).addTo(map).start();
 
     map.addControl(new ReloadControl());
 

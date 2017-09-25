@@ -16,13 +16,13 @@ app.static_folder = '.'  # just serve up from root
 # index
 @app.route('/')
 def root():
-    return app.send_static_file('index.html')
+    return app.send_static_file('static/index.html')
 
 
 # static files
 @app.route('/<path:path>')
 def static_proxy(path):
-    return send_from_directory('.', path)
+    return send_from_directory('static', path)
 
 
 # proxy bikeshare stations to get around CORS issues
