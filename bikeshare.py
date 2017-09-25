@@ -1,11 +1,11 @@
 #!/usr/bin/python
 
-from flask import Flask, send_from_directory, stream_with_context, Response
 import requests
+from flask import (Flask, Response, jsonify, request, send_from_directory,
+                   stream_with_context)
 
-
-
-BIKESHARE_URL = 'http://feeds.capitalbikeshare.com/stations/stations.xml'
+BIKESHARE_URL = 'http://feeds.capitalbikeshare.com/stations/stations.json'
+MOBIKE_URL = 'https://mwx.mobike.com/mobike-api/rent/nearbyBikesInfo.do'
 
 
 # Setup Flask app.
@@ -26,11 +26,25 @@ def static_proxy(path):
 
 
 # proxy bikeshare stations to get around CORS issues
-@app.route('/stations/stations.xml')
+@app.route('/stations/stations.json')
 def bikeshare_proxy():
-    req = requests.get(BIKESHARE_URL, stream=True)
-    return Response(stream_with_context(req.iter_content()),
-                    content_type=req.headers['content-type'])
+    resp = requests.get(BIKESHARE_URL, stream=True)
+    return Response(stream_with_context(resp.iter_content()),
+                    content_type=resp.headers['content-type'])
+
+
+# proxy mobike
+@app.route('/mobike')
+def mobike_proxy():
+    resp = requests.post(
+        MOBIKE_URL,
+        params={
+            'longitude': request.args.get('longitude', ''),
+            'latitude': request.args.get('latitude', ''),
+        },
+        headers={'Referer': 'https://servicewechat.com/'},
+    )
+    return jsonify(resp.json())
 
 
 

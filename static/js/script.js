@@ -1,40 +1,29 @@
 (function() {
-    var map, markers;
+    var map, cabi_markers, mobike_markers;
 
     var update_markers = function() {
         document.querySelector('.reload-control .icon').classList.add('spin');
 
-        var xhr = new XMLHttpRequest();
-        xhr.onload = function(e) {
-            if (xhr.status === 200 || xhr.status === 0) {
-                if(markers && map) map.removeLayer(markers);
-                document.querySelector('.reload-control .icon').classList.remove('spin');
+        fetch('/stations/stations.json')
+          .then(resp => resp.json())
+          .then(({stationBeanList}) => {
+            if(cabi_markers && map) map.removeLayer(cabi_markers);
+            document.querySelector('.reload-control .icon').classList.remove('spin');
 
-                markers = L.markerClusterGroup();
+            cabi_markers = L.markerClusterGroup();
 
-                $.each(xhr.responseXML.querySelectorAll('station'), function(i, node) {
-                    var marker = L.marker([
-                        node.querySelector('lat').textContent,
-                        node.querySelector('long').textContent
-                        ]);
-                    marker.bindPopup('<div>' +
-                            '<h3>' + node.querySelector('name').textContent + '</h3>' +
-                            '<p>Bikes: ' + node.querySelector('nbBikes').textContent + ' - ' +
-                            'Slots: ' + node.querySelector('nbEmptyDocks').textContent + '</p>' +
-                            '</div>');
-                    markers.addLayer(marker);
-                });
+            stationBeanList.map(({latitude, longitude, stationName, availableDocks, availableBikes}) => {
+                var marker = L.marker([latitude, longitude]);
+                marker.bindPopup(
+                    `<div>
+                       <h3>${stationName}</h3>
+                       <p>Bikes: ${availableBikes} - Slots: ${availableDocks}</p>
+                     </div>`);
+                cabi_markers.addLayer(marker);
+            });
 
-                map.addLayer(markers);
-            } else {
-                alert('Failed to retrieve data from Capital Bikeshare')
-            }
-        }
-        xhr.open('GET', (window.location.origin != 'file://' ? '' :
-                         'http://feeds.capitalbikeshare.com') +
-                 '/stations/stations.xml', true);
-        xhr.responseType = 'document';
-        xhr.send();
+            map.addLayer(cabi_markers);
+          });
     };
 
 
@@ -69,7 +58,26 @@
     // hacking this in JS bc of Leaflet/Leaflet#466
     document.querySelector('.leaflet-control-attribution a').target = '_blank';
 
-    var lc = L.control.locate({locateOptions: {maxZoom: 15}}).addTo(map).start();
+    L.control.locate({locateOptions: {
+        maxZoom: 15,
+        enableHighAccuracy: true,
+    }}).addTo(map).start();
+    map.on('locationfound', function({latlng}) {
+        //map.on('locationerror', function({latlng}) {
+        //var latlng = {lat: 38.910991, lng: -77.0108011};
+        fetch(`/mobike?longitude=${latlng.lng}&latitude=${latlng.lat}`)
+          .then(resp => resp.json())
+          .then(({object}) => {
+            if(mobike_markers && map) map.removeLayer(mobike_markers);
+            mobike_markers = L.markerClusterGroup();
+            object.map(({distX, distY}) => {
+              var marker = L.marker([distY, distX]);
+              marker.bindPopup('<div>MOBIKE</div>');
+              mobike_markers.addLayer(marker);
+            });
+            map.addLayer(mobike_markers);
+          });
+    });
 
     map.addControl(new ReloadControl());
 
