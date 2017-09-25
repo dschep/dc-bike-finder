@@ -69,7 +69,7 @@
     // hacking this in JS bc of Leaflet/Leaflet#466
     document.querySelector('.leaflet-control-attribution a').target = '_blank';
 
-    var lc = L.control.locate({locateOptions: {maxZoom: 16}}).addTo(map).start();
+    var lc = L.control.locate({locateOptions: {maxZoom: 15}}).addTo(map).start();
 
     map.addControl(new ReloadControl());
 
