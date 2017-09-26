@@ -1,4 +1,4 @@
-# ![DC Bike Finder](https://raw.github.com/dschep/dc-bike-finder/master/img/icon.png) DC Bike Finder
+# :bike: DC Bike Finder
 
 A webapp for finding bikeshares in DC! Currently supports:
 
