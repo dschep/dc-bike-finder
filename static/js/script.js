@@ -5,9 +5,11 @@
     iconAnchor: [24, 48],
     popupAnchor: [0, -48],
   });
-  var map, cabiMarkers, mobikeMarkers, jumpMarkers, location;
+  let cabiMarkers, mobikeMarkers, jumpMarkers, location;
 
-  var updateMarkers = function(locationOnly = false) {
+  const map = L.map('map').setView([38.91, -77.04], 11);
+
+  const updateMarkers = (locationOnly = false) => {
     document.querySelector('.reload-control .icon').classList.add('spin');
 
     if (!locationOnly) {
@@ -17,10 +19,10 @@
           if(cabiMarkers && map) map.removeLayer(cabiMarkers);
           document.querySelector('.reload-control .icon').classList.remove('spin');
 
-          cabiMarkers = L.markerClusterGroup();
+          cabiMarkers = L.layerGroup();
 
           stationBeanList.map(({latitude, longitude, stationName, availableDocks, availableBikes}) => {
-            var marker = L.marker([latitude, longitude], {icon: icon('cabi')});
+            const marker = L.marker([latitude, longitude], {icon: icon('cabi')});
             marker.bindPopup(
               `<div>
               <h3>${stationName}</h3>
@@ -35,9 +37,9 @@
         .then(resp => resp.json())
         .then(({items}) => {
           if(jumpMarkers && map) map.removeLayer(jumpMarkers);
-          jumpMarkers = L.markerClusterGroup();
+          jumpMarkers = L.layerGroup();
           items.map(({name, address, current_position}) => {
-            var marker = L.marker(current_position.coordinates.reverse(),
+            const marker = L.marker(current_position.coordinates.reverse(),
                                   {icon: icon('jump')});
             marker.bindPopup(`<div>${name}<p>${address}</p></div>`);
             jumpMarkers.addLayer(marker);
@@ -50,9 +52,9 @@
         .then(resp => resp.json())
         .then(({object}) => {
           if(mobikeMarkers && map) map.removeLayer(mobikeMarkers);
-          mobikeMarkers = L.markerClusterGroup();
+          mobikeMarkers = L.layerGroup();
           object.map(({distX, distY}) => {
-            var marker = L.marker([distY, distX], {icon: icon('mobike')});
+            const marker = L.marker([distY, distX], {icon: icon('mobike')});
             marker.bindPopup('<div>MOBIKE</div>');
             mobikeMarkers.addLayer(marker);
           });
@@ -61,14 +63,14 @@
   };
 
 
-  var ReloadControl = L.Control.extend({
+  const ReloadControl = L.Control.extend({
     options: {
       position: 'topright'
     },
 
     onAdd: function (map) {
-      var container = L.DomUtil.create('div', 'reload-control leaflet-bar');
-      var innerContainer = L.DomUtil.create('a', 'leaflet-bar-part leaflet-bar-part-single', container);
+      const container = L.DomUtil.create('div', 'reload-control leaflet-bar');
+      const innerContainer = L.DomUtil.create('a', 'leaflet-bar-part leaflet-bar-part-single', container);
       L.DomUtil.create('div', 'icon', innerContainer);
 
       L.DomEvent
@@ -81,8 +83,6 @@
   });
 
 
-  map = L.map('map').setView([38.91, -77.04], 11);
-
   L.tileLayer('https://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey={apikey}', {
     attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     apikey: '43a3528946814e018e2667b156d87992',
@@ -92,7 +92,7 @@
   // hacking this in JS bc of Leaflet/Leaflet#466
   document.querySelector('.leaflet-control-attribution a').target = '_blank';
 
-  var lc = L.control.locate({locateOptions: {
+  L.control.locate({locateOptions: {
     maxZoom: 15,
     enableHighAccuracy: true,
   }}).addTo(map).start();
