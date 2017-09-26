@@ -98,8 +98,8 @@
       map.addLayer(jump_markers);
     });
 
-        map.addControl(new ReloadControl());
+    map.addControl(new ReloadControl());
 
-        update_markers();
-        window.setTimeout(update_markers, 60000);
+    update_markers();
+    window.setTimeout(update_markers, 60000);
 })()
