@@ -1,5 +1,5 @@
 (function() {
-    var map, cabi_markers, mobike_markers;
+    var map, cabi_markers, mobike_markers, jump_markers;
 
     var update_markers = function() {
         document.querySelector('.reload-control .icon').classList.add('spin');
@@ -13,7 +13,12 @@
             cabi_markers = L.markerClusterGroup();
 
             stationBeanList.map(({latitude, longitude, stationName, availableDocks, availableBikes}) => {
-                var marker = L.marker([latitude, longitude]);
+                var marker = L.marker([latitude, longitude], {icon: L.icon({
+                  iconUrl: '/img/cabi.png',
+                  iconSize: [48, 48],
+                  iconAnchor: [24, 48],
+                  popupAnchor: [0, -48],
+                })});
                 marker.bindPopup(
                     `<div>
                        <h3>${stationName}</h3>
@@ -58,7 +63,7 @@
     // hacking this in JS bc of Leaflet/Leaflet#466
     document.querySelector('.leaflet-control-attribution a').target = '_blank';
 
-    L.control.locate({locateOptions: {
+    var lc = L.control.locate({locateOptions: {
         maxZoom: 15,
         enableHighAccuracy: true,
     }}).addTo(map).start();
@@ -71,11 +76,35 @@
             if(mobike_markers && map) map.removeLayer(mobike_markers);
             mobike_markers = L.markerClusterGroup();
             object.map(({distX, distY}) => {
-              var marker = L.marker([distY, distX]);
+              var marker = L.marker([distY, distX], {icon: L.icon({
+                  iconUrl: '/img/mobike.png',
+                  iconSize: [48, 48],
+                  iconAnchor: [24, 48],
+                  popupAnchor: [0, -48],
+                })});
               marker.bindPopup('<div>MOBIKE</div>');
               mobike_markers.addLayer(marker);
             });
             map.addLayer(mobike_markers);
+          });
+        fetch('https://app.socialbicycles.com/api/networks/136/bikes.json',
+              {cors: true})
+          .then(resp => resp.json())
+          .then(({items}) => {
+            if(jump_markers && map) map.removeLayer(jump_markers);
+            jump_markers = L.markerClusterGroup();
+            items.map(({name, address, current_position}) => {
+              var marker = L.marker(current_position.coordinates.reverse(),
+                {icon: L.icon({
+                  iconUrl: '/img/jump.png',
+                  iconSize: [48, 48],
+                  iconAnchor: [24, 48],
+                  popupAnchor: [0, -48],
+                })});
+              marker.bindPopup(`<div>${name}<p>${address}</p></div>`);
+              jump_markers.addLayer(marker);
+            });
+            map.addLayer(jump_markers);
           });
     });
 
