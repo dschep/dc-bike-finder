@@ -1,10 +1,11 @@
 # ![DC Bike Finder](https://raw.github.com/dschep/dc-bike-finder/master/img/icon.png) DC Bike Finder
 
-Hosted version at: http://dc-bike-finder.herokuapp.com/
+A webapp for finding bikeshares in DC! Currently supports:
 
-Currently available for:
- * [FirefoxOS](https://marketplace.firefox.com/app/dc-bike-finder)
+ * [Capital Bikeshare](https://www.capitalbikeshare.com/)
+ * [JUMP](https://dc.jumpmobility.com/)
+ * [Mobike](https://www.mobike.com/us/)
 
+Hosted version at: https://share.bikehero.io/
 
-
-PhoneGap builds for Android, iOS & WinPhở are in the works. (Partially dependent on bothering to pay for the relevant stores)
+![screenshot](.screenshot.png)
