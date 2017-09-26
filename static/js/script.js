@@ -6,21 +6,30 @@
     popupAnchor: [0, -48],
   });
   let cabiMarkers, mobikeMarkers, jumpMarkers, location;
+  const updating = {
+    mobike: false,
+    cabi: false,
+    jump: false,
+  }
 
   const map = L.map('map').setView([38.91, -77.04], 11);
+  const removeSpinner = (finishedService) => {
+    updating[finishedService] = false;
+    if (Object.values(updating).every(i => !i))
+      document.querySelector('.reload-control .icon').classList.remove('spin');
+  };
 
   const updateMarkers = (locationOnly = false) => {
     document.querySelector('.reload-control .icon').classList.add('spin');
 
-    if (!locationOnly) {
+    if (locationOnly !== true) {
+      updating.cabi = true;
       fetch('/stations/stations.json')
         .then(resp => resp.json())
         .then(({stationBeanList}) => {
           if(cabiMarkers && map) map.removeLayer(cabiMarkers);
-          document.querySelector('.reload-control .icon').classList.remove('spin');
-
+          removeSpinner('cabi');
           cabiMarkers = L.layerGroup();
-
           stationBeanList.map(({latitude, longitude, stationName, availableDocks, availableBikes}) => {
             const marker = L.marker([latitude, longitude], {icon: icon('cabi')});
             marker.bindPopup(
@@ -33,10 +42,12 @@
 
           map.addLayer(cabiMarkers);
         });
+      updating.jump = true;
       fetch('https://app.socialbicycles.com/api/networks/136/bikes.json', {cors: true})
         .then(resp => resp.json())
         .then(({items}) => {
           if(jumpMarkers && map) map.removeLayer(jumpMarkers);
+          removeSpinner('jump');
           jumpMarkers = L.layerGroup();
           items.map(({name, address, current_position}) => {
             const marker = L.marker(current_position.coordinates.reverse(),
@@ -47,11 +58,13 @@
           map.addLayer(jumpMarkers);
         });
     }
-    if (location)
+    if (location) {
+      updating.mobike = true;
       fetch(`/mobike?longitude=${location.lng}&latitude=${location.lat}`)
         .then(resp => resp.json())
         .then(({object}) => {
           if(mobikeMarkers && map) map.removeLayer(mobikeMarkers);
+          removeSpinner('mobike');
           mobikeMarkers = L.layerGroup();
           object.map(({distX, distY}) => {
             const marker = L.marker([distY, distX], {icon: icon('mobike')});
@@ -60,6 +73,7 @@
           });
           map.addLayer(mobikeMarkers);
         });
+    }
   };
 
 
