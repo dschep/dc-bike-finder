@@ -5,31 +5,59 @@
     iconAnchor: [24, 48],
     popupAnchor: [0, -48],
   });
-  var map, cabi_markers, mobike_markers, jump_markers;
+  var map, cabi_markers, mobike_markers, jump_markers, location;
 
-  var update_markers = function() {
+  var update_markers = function(locationOnly = false) {
     document.querySelector('.reload-control .icon').classList.add('spin');
 
-    fetch('/stations/stations.json')
-      .then(resp => resp.json())
-      .then(({stationBeanList}) => {
-        if(cabi_markers && map) map.removeLayer(cabi_markers);
-        document.querySelector('.reload-control .icon').classList.remove('spin');
+    if (!locationOnly) {
+      fetch('/stations/stations.json')
+        .then(resp => resp.json())
+        .then(({stationBeanList}) => {
+          if(cabi_markers && map) map.removeLayer(cabi_markers);
+          document.querySelector('.reload-control .icon').classList.remove('spin');
 
-        cabi_markers = L.markerClusterGroup();
+          cabi_markers = L.markerClusterGroup();
 
-        stationBeanList.map(({latitude, longitude, stationName, availableDocks, availableBikes}) => {
-          var marker = L.marker([latitude, longitude], {icon: icon('cabi')});
-          marker.bindPopup(
-            `<div>
-            <h3>${stationName}</h3>
-            <p>Bikes: ${availableBikes} - Slots: ${availableDocks}</p>
-            </div>`);
-            cabi_markers.addLayer(marker);
+          stationBeanList.map(({latitude, longitude, stationName, availableDocks, availableBikes}) => {
+            var marker = L.marker([latitude, longitude], {icon: icon('cabi')});
+            marker.bindPopup(
+              `<div>
+              <h3>${stationName}</h3>
+              <p>Bikes: ${availableBikes} - Slots: ${availableDocks}</p>
+              </div>`);
+              cabi_markers.addLayer(marker);
+          });
+
+          map.addLayer(cabi_markers);
         });
-
-        map.addLayer(cabi_markers);
-      });
+      fetch('https://app.socialbicycles.com/api/networks/136/bikes.json', {cors: true})
+        .then(resp => resp.json())
+        .then(({items}) => {
+          if(jump_markers && map) map.removeLayer(jump_markers);
+          jump_markers = L.markerClusterGroup();
+          items.map(({name, address, current_position}) => {
+            var marker = L.marker(current_position.coordinates.reverse(),
+                                  {icon: icon('jump')});
+            marker.bindPopup(`<div>${name}<p>${address}</p></div>`);
+            jump_markers.addLayer(marker);
+          });
+          map.addLayer(jump_markers);
+        });
+    }
+    if (location)
+      fetch(`/mobike?longitude=${location.lng}&latitude=${location.lat}`)
+        .then(resp => resp.json())
+        .then(({object}) => {
+          if(mobike_markers && map) map.removeLayer(mobike_markers);
+          mobike_markers = L.markerClusterGroup();
+          object.map(({distX, distY}) => {
+            var marker = L.marker([distY, distX], {icon: icon('mobike')});
+            marker.bindPopup('<div>MOBIKE</div>');
+            mobike_markers.addLayer(marker);
+          });
+          map.addLayer(mobike_markers);
+        });
   };
 
 
@@ -69,37 +97,12 @@
     enableHighAccuracy: true,
   }}).addTo(map).start();
   map.on('locationfound', function({latlng}) {
-    //map.on('locationerror', function({latlng}) {
-    //var latlng = {lat: 38.910991, lng: -77.0108011};
-    fetch(`/mobike?longitude=${latlng.lng}&latitude=${latlng.lat}`)
-      .then(resp => resp.json())
-      .then(({object}) => {
-        if(mobike_markers && map) map.removeLayer(mobike_markers);
-        mobike_markers = L.markerClusterGroup();
-        object.map(({distX, distY}) => {
-          var marker = L.marker([distY, distX], {icon: icon('mobike')});
-          marker.bindPopup('<div>MOBIKE</div>');
-          mobike_markers.addLayer(marker);
-        });
-        map.addLayer(mobike_markers);
-      });
+    location = latlng;
+    update_markers(true);
   });
-  fetch('https://app.socialbicycles.com/api/networks/136/bikes.json', {cors: true})
-    .then(resp => resp.json())
-    .then(({items}) => {
-      if(jump_markers && map) map.removeLayer(jump_markers);
-      jump_markers = L.markerClusterGroup();
-      items.map(({name, address, current_position}) => {
-        var marker = L.marker(current_position.coordinates.reverse(),
-                              {icon: icon('jump')});
-        marker.bindPopup(`<div>${name}<p>${address}</p></div>`);
-        jump_markers.addLayer(marker);
-      });
-      map.addLayer(jump_markers);
-    });
 
-    map.addControl(new ReloadControl());
+  map.addControl(new ReloadControl());
 
-    update_markers();
-    window.setTimeout(update_markers, 60000);
+  update_markers();
+  window.setTimeout(update_markers, 60000);
 })()
