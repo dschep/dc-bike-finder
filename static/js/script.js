@@ -5,19 +5,19 @@
     iconAnchor: [24, 48],
     popupAnchor: [0, -48],
   });
-  var map, cabi_markers, mobike_markers, jump_markers, location;
+  var map, cabiMarkers, mobikeMarkers, jumpMarkers, location;
 
-  var update_markers = function(locationOnly = false) {
+  var updateMarkers = function(locationOnly = false) {
     document.querySelector('.reload-control .icon').classList.add('spin');
 
     if (!locationOnly) {
       fetch('/stations/stations.json')
         .then(resp => resp.json())
         .then(({stationBeanList}) => {
-          if(cabi_markers && map) map.removeLayer(cabi_markers);
+          if(cabiMarkers && map) map.removeLayer(cabiMarkers);
           document.querySelector('.reload-control .icon').classList.remove('spin');
 
-          cabi_markers = L.markerClusterGroup();
+          cabiMarkers = L.markerClusterGroup();
 
           stationBeanList.map(({latitude, longitude, stationName, availableDocks, availableBikes}) => {
             var marker = L.marker([latitude, longitude], {icon: icon('cabi')});
@@ -26,37 +26,37 @@
               <h3>${stationName}</h3>
               <p>Bikes: ${availableBikes} - Slots: ${availableDocks}</p>
               </div>`);
-              cabi_markers.addLayer(marker);
+              cabiMarkers.addLayer(marker);
           });
 
-          map.addLayer(cabi_markers);
+          map.addLayer(cabiMarkers);
         });
       fetch('https://app.socialbicycles.com/api/networks/136/bikes.json', {cors: true})
         .then(resp => resp.json())
         .then(({items}) => {
-          if(jump_markers && map) map.removeLayer(jump_markers);
-          jump_markers = L.markerClusterGroup();
+          if(jumpMarkers && map) map.removeLayer(jumpMarkers);
+          jumpMarkers = L.markerClusterGroup();
           items.map(({name, address, current_position}) => {
             var marker = L.marker(current_position.coordinates.reverse(),
                                   {icon: icon('jump')});
             marker.bindPopup(`<div>${name}<p>${address}</p></div>`);
-            jump_markers.addLayer(marker);
+            jumpMarkers.addLayer(marker);
           });
-          map.addLayer(jump_markers);
+          map.addLayer(jumpMarkers);
         });
     }
     if (location)
       fetch(`/mobike?longitude=${location.lng}&latitude=${location.lat}`)
         .then(resp => resp.json())
         .then(({object}) => {
-          if(mobike_markers && map) map.removeLayer(mobike_markers);
-          mobike_markers = L.markerClusterGroup();
+          if(mobikeMarkers && map) map.removeLayer(mobikeMarkers);
+          mobikeMarkers = L.markerClusterGroup();
           object.map(({distX, distY}) => {
             var marker = L.marker([distY, distX], {icon: icon('mobike')});
             marker.bindPopup('<div>MOBIKE</div>');
-            mobike_markers.addLayer(marker);
+            mobikeMarkers.addLayer(marker);
           });
-          map.addLayer(mobike_markers);
+          map.addLayer(mobikeMarkers);
         });
   };
 
@@ -68,12 +68,12 @@
 
     onAdd: function (map) {
       var container = L.DomUtil.create('div', 'reload-control leaflet-bar');
-      var inner_container = L.DomUtil.create('a', 'leaflet-bar-part leaflet-bar-part-single', container);
-      L.DomUtil.create('div', 'icon', inner_container);
+      var innerContainer = L.DomUtil.create('a', 'leaflet-bar-part leaflet-bar-part-single', container);
+      L.DomUtil.create('div', 'icon', innerContainer);
 
       L.DomEvent
       .addListener(container, 'click', L.DomEvent.stop)
-      .addListener(container, 'click', update_markers, this);
+      .addListener(container, 'click', updateMarkers, this);
       L.DomEvent.disableClickPropagation(container);
 
       return container;
@@ -98,11 +98,11 @@
   }}).addTo(map).start();
   map.on('locationfound', function({latlng}) {
     location = latlng;
-    update_markers(true);
+    updateMarkers(true);
   });
 
   map.addControl(new ReloadControl());
 
-  update_markers();
-  window.setTimeout(update_markers, 60000);
+  updateMarkers();
+  window.setTimeout(updateMarkers, 60000);
 })()
