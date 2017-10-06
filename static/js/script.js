@@ -69,7 +69,7 @@
           mobikeMarkers = L.layerGroup();
           object.map(({distX, distY}) => {
             const marker = L.marker([distY, distX], {icon: icon('mobike')});
-            marker.bindPopup('<div>MOBIKE</div>');
+            marker.bindPopup('<div>LIMEBIKE</div>');
             mobikeMarkers.addLayer(marker);
           });
           map.addLayer(mobikeMarkers);
