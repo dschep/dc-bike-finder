@@ -69,7 +69,7 @@
           mobikeMarkers = L.layerGroup();
           object.map(({distX, distY}) => {
             const marker = L.marker([distY, distX], {icon: icon('mobike')});
-            marker.bindPopup('<div>LIMEBIKE</div>');
+            marker.bindPopup('<div>MOBIKE</div>');
             mobikeMarkers.addLayer(marker);
           });
           map.addLayer(mobikeMarkers);
@@ -83,7 +83,7 @@
           limebikeMarkers = L.layerGroup();
           data.attributes.nearby_locked_bikes.map(({attributes}) => {
             const marker = L.marker([attributes.latitude, attributes.longitude], {icon: icon('limebike')});
-            marker.bindPopup('<div>MOBIKE</div>');
+            marker.bindPopup('<div>LIMEBIKE</div>');
             limebikeMarkers.addLayer(marker);
           });
           map.addLayer(limebikeMarkers);
