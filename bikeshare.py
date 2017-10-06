@@ -6,6 +6,7 @@ from flask import (Flask, Response, jsonify, request, send_from_directory,
 
 BIKESHARE_URL = 'http://feeds.capitalbikeshare.com/stations/stations.json'
 MOBIKE_URL = 'https://mwx.mobike.com/mobike-api/rent/nearbyBikesInfo.do'
+LIMEBIKE_URL = 'https://web-production.lime.bike/api/public/v1/views/bikes'
 
 
 # Setup Flask app.
@@ -43,6 +44,21 @@ def mobike_proxy():
             'latitude': request.args.get('latitude', ''),
         },
         headers={'Referer': 'https://servicewechat.com/'},
+    )
+    return jsonify(resp.json())
+
+
+# proxy limebike
+@app.route('/limebike')
+def limebike_proxy():
+    resp = requests.get(
+        LIMEBIKE_URL,
+        params={
+            'map_center_latitude': request.args.get('latitude', ''),
+            'map_center_longitude': request.args.get('longitude', ''),
+            'user_latitude': request.args.get('latitude', ''),
+            'user_longitude': request.args.get('longitude', ''),
+        },
     )
     return jsonify(resp.json())
 

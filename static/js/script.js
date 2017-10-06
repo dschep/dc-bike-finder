@@ -5,11 +5,12 @@
     iconAnchor: [24, 48],
     popupAnchor: [0, -48],
   });
-  let cabiMarkers, mobikeMarkers, jumpMarkers, location;
+  let cabiMarkers, mobikeMarkers, jumpMarkers, limebikeMarkers, location;
   const updating = {
     mobike: false,
     cabi: false,
     jump: false,
+    limebike: false,
   }
 
   const map = L.map('map').setView([38.91, -77.04], 11);
@@ -72,6 +73,20 @@
             mobikeMarkers.addLayer(marker);
           });
           map.addLayer(mobikeMarkers);
+        });
+      updating.limebike = true;
+      fetch(`/limebike?longitude=${location.lng}&latitude=${location.lat}`)
+        .then(resp => resp.json())
+        .then(({data}) => {
+          if(limebikeMarkers && map) map.removeLayer(limebikeMarkers);
+          removeSpinner('limebike');
+          limebikeMarkers = L.layerGroup();
+          data.attributes.nearby_locked_bikes.map(({attributes}) => {
+            const marker = L.marker([attributes.latitude, attributes.longitude], {icon: icon('limebike')});
+            marker.bindPopup('<div>MOBIKE</div>');
+            limebikeMarkers.addLayer(marker);
+          });
+          map.addLayer(limebikeMarkers);
         });
     }
   };
