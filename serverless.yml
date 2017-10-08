@@ -1,0 +1,41 @@
+service: bikefinder
+provider:
+  name: aws
+  runtime: python3.6
+  environment:
+    CORS_ORIGIN: '*' #https://share.bikehero.io/
+
+custom:
+  client:
+    bucketName: dc-bike-finder
+
+package:
+  include:
+    - bikeshare.py
+    - slsutils.py
+  exclude:
+    - '**/*'
+
+functions:
+  cabi:
+    handler: bikeshare.bikeshare_proxy
+    events:
+      - http:
+          path: /cabi
+          method: get
+  mobike:
+    handler: bikeshare.mobike_proxy
+    events:
+      - http:
+          path: /mobike
+          method: get
+  limebike:
+    handler: bikeshare.limebike_proxy
+    events:
+      - http:
+          path: /limebike
+          method: get
+
+plugins:
+  - serverless-finch
+  - serverless-python-requirements

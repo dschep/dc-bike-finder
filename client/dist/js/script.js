@@ -1,6 +1,7 @@
 (function() {
+  ORIGIN = 'https://0v0e2r58h8.execute-api.us-east-1.amazonaws.com/dev';
   const icon = iconName => L.icon({
-    iconUrl: `/img/${iconName}.png`,
+    iconUrl: `img/${iconName}.png`,
     iconSize: [48, 48],
     iconAnchor: [24, 48],
     popupAnchor: [0, -48],
@@ -25,7 +26,7 @@
 
     if (locationOnly !== true) {
       updating.cabi = true;
-      fetch('/stations/stations.json')
+      fetch(`${ORIGIN}/cabi`)
         .then(resp => resp.json())
         .then(({stationBeanList}) => {
           if(cabiMarkers && map) map.removeLayer(cabiMarkers);
@@ -61,7 +62,7 @@
     }
     if (location) {
       updating.mobike = true;
-      fetch(`/mobike?longitude=${location.lng}&latitude=${location.lat}`)
+      fetch(`${ORIGIN}/mobike?longitude=${location.lng}&latitude=${location.lat}`)
         .then(resp => resp.json())
         .then(({object}) => {
           if(mobikeMarkers && map) map.removeLayer(mobikeMarkers);
@@ -75,7 +76,7 @@
           map.addLayer(mobikeMarkers);
         });
       updating.limebike = true;
-      fetch(`/limebike?longitude=${location.lng}&latitude=${location.lat}`)
+      fetch(`${ORIGIN}/limebike?longitude=${location.lng}&latitude=${location.lat}`)
         .then(resp => resp.json())
         .then(({data}) => {
           if(limebikeMarkers && map) map.removeLayer(limebikeMarkers);

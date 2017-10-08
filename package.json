@@ -1,0 +1,9 @@
+{
+  "name": "bikefinder",
+  "description": "",
+  "version": "0.1.0",
+  "devDependencies": {
+    "serverless-finch": "^1.1.1",
+    "serverless-python-requirements": "^3.0.4"
+  }
+}
