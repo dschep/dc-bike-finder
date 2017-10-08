@@ -7,7 +7,7 @@ provider:
 
 custom:
   client:
-    bucketName: dc-bike-finder
+    bucketName: share.bikehero.io
 
 package:
   include:
