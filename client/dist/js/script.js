@@ -34,7 +34,8 @@
           removeSpinner('cabi');
           cabiMarkers = L.layerGroup();
           stationBeanList.map(({latitude, longitude, stationName, availableDocks, availableBikes}) => {
-            const marker = L.marker([latitude, longitude], {icon: icon('cabi')});
+            const percentBikes = Math.round(availableBikes/(availableBikes+availableDocks)*10) * 10;
+            const marker = L.marker([latitude, longitude], {icon: icon(`cabi${percentBikes}`)});
             marker.bindPopup(
               `<div>
               <h3>${stationName}</h3>
