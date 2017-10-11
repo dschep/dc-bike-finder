@@ -2,8 +2,13 @@
   "name": "bikefinder",
   "description": "",
   "version": "0.1.0",
+  "scripts": {
+    "sls": "sls"
+  },
   "devDependencies": {
+    "serverless-crypt": "marcy-terui/serverless-crypt",
     "serverless-finch": "^1.1.1",
-    "serverless-python-requirements": "^3.0.4"
+    "serverless-python-requirements": "^3.0.4",
+    "serverless": "^1.23.0"
   }
 }

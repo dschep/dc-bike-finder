@@ -6,12 +6,13 @@
     iconAnchor: [24, 48],
     popupAnchor: [0, -48],
   });
-  let cabiMarkers, mobikeMarkers, jumpMarkers, limebikeMarkers, location;
+  let cabiMarkers, mobikeMarkers, jumpMarkers, limebikeMarkers, ofoMarkers, location;
   const updating = {
     mobike: false,
     cabi: false,
     jump: false,
     limebike: false,
+    ofo: false,
   }
 
   const map = L.map('map').setView([38.91, -77.04], 11);
@@ -88,6 +89,20 @@
             limebikeMarkers.addLayer(marker);
           });
           map.addLayer(limebikeMarkers);
+        });
+      updating.ofo = true;
+      fetch(`${ORIGIN}/ofo?longitude=${location.lng}&latitude=${location.lat}`)
+        .then(resp => resp.json())
+        .then(({values}) => {
+          if(ofoMarkers && map) map.removeLayer(ofoMarkers);
+          removeSpinner('ofo');
+          ofoMarkers = L.layerGroup();
+          values.cars.map(({lat, lng}) => {
+            const marker = L.marker([lat, lng], {icon: icon('ofo')});
+            marker.bindPopup('<div>OFO</div>');
+            ofoMarkers.addLayer(marker);
+          });
+          map.addLayer(ofoMarkers);
         });
     }
   };

@@ -1,4 +1,7 @@
-service: bikefinder
+service:
+  name: bikefinder
+  awsKmsKeyArn: ${self:custom.cryptKeyId}
+
 provider:
   name: aws
   runtime: python3.6
@@ -8,6 +11,7 @@ provider:
 custom:
   client:
     bucketName: share.bikehero.io
+  cryptKeyId: arn:aws:kms:us-east-1:704903784842:key/49b8e145-0e10-4e99-a899-c4cdfe07880c
 
 package:
   include:
@@ -35,7 +39,15 @@ functions:
       - http:
           path: /limebike
           method: get
+  ofo:
+    handler: bikeshare.ofo_proxy
+    timeout: 30
+    events:
+      - http:
+          path: /ofo
+          method: get
 
 plugins:
   - serverless-finch
   - serverless-python-requirements
+  - serverless-crypt
