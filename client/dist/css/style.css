@@ -73,3 +73,6 @@ html, body, #map {
 .leaflet-control-locate a {
     padding: 0;
 }
+.leaflet-marker-icon {
+    filter: drop-shadow(1px 1px 3px #222);
+}
