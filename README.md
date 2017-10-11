@@ -6,6 +6,7 @@ A webapp for finding bikeshares in DC! Currently supports:
  * [JUMP](https://dc.jumpmobility.com/)
  * [Mobike](https://www.mobike.com/us/)
  * [Limebike](https://www.limebike.com/)
+ * [Ofo](http://www.ofo.com/)
 
 Hosted version at: https://share.bikehero.io/
 
