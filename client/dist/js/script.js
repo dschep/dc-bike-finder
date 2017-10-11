@@ -6,7 +6,8 @@
     iconAnchor: [24, 48],
     popupAnchor: [0, -48],
   });
-  let cabiMarkers, mobikeMarkers, jumpMarkers, limebikeMarkers, ofoMarkers, location;
+  let location;
+  const markers = {};
   const updating = {
     mobike: false,
     cabi: false,
@@ -24,88 +25,66 @@
 
   const updateMarkers = (locationOnly = false) => {
     document.querySelector('.reload-control .icon').classList.add('spin');
+    const fetcher = {
+      cabi: () => fetch(`${ORIGIN}/cabi`)
+        .then(resp => resp.json())
+        .then(({stationBeanList}) => stationBeanList.map(
+          ({latitude, longitude, stationName, availableDocks, availableBikes}) => ({
+			percentBikes: Math.round(availableBikes/(availableBikes+availableDocks)*10) * 10,
+            latitude,
+            longitude,
+            label: `<div>
+                      <h3>${stationName}</h3>
+                      <p>Bikes: ${availableBikes} - Slots: ${availableDocks}</p>
+                    </div>`,
+          }))),
+      jump: () => fetch('https://app.socialbicycles.com/api/networks/136/bikes.json', {cors: true})
+        .then(resp => resp.json())
+        .then(({items}) => items.map(({name, address, current_position}) => ({
+          longitude: current_position.coordinates[0],
+          latitude: current_position.coordinates[1],
+          label: `<div>${name}<p>${address}</p></div>`,
+        }))),
+      ofo: (location) => !location?Promise.resolve([]):fetch(`${ORIGIN}/ofo?longitude=${location.lng}&latitude=${location.lat}`)
+        .then(resp => resp.json())
+        .then(({values}) => values.cars.map(({lat, lng}) => ({
+          longitude: lng,
+          latitude: lat,
+          label: 'ofo',
+        }))),
+      mobike: (location) => !location?Promise.resolve([]):fetch(`${ORIGIN}/mobike?longitude=${location.lng}&latitude=${location.lat}`)
+        .then(resp => resp.json())
+        .then(({object}) => object.map(({distX, distY}) => ({
+          longitude: distX,
+          latitude: distY,
+          label: 'mobike',
+        }))),
+      limebike: (location) => !location?Promise.resolve([]):fetch(`${ORIGIN}/limebike?longitude=${location.lng}&latitude=${location.lat}`)
+        .then(resp => resp.json())
+        .then(({data}) => data.attributes.nearby_locked_bikes.map(({attributes}) => ({
+          longitude: attributes.longitude,
+          latitude: attributes.latitude,
+          label: 'limebike',
+        }))),
+    };
 
-    if (locationOnly !== true) {
-      updating.cabi = true;
-      fetch(`${ORIGIN}/cabi`)
-        .then(resp => resp.json())
-        .then(({stationBeanList}) => {
-          if(cabiMarkers && map) map.removeLayer(cabiMarkers);
-          removeSpinner('cabi');
-          cabiMarkers = L.layerGroup();
-          stationBeanList.map(({latitude, longitude, stationName, availableDocks, availableBikes}) => {
-            const percentBikes = Math.round(availableBikes/(availableBikes+availableDocks)*10) * 10;
-            const marker = L.marker([latitude, longitude], {icon: icon(`cabi${percentBikes}`)});
-            marker.bindPopup(
-              `<div>
-              <h3>${stationName}</h3>
-              <p>Bikes: ${availableBikes} - Slots: ${availableDocks}</p>
-              </div>`);
-              cabiMarkers.addLayer(marker);
+    ['cabi', 'jump', 'ofo', 'mobike', 'limebike'].map((system) => {
+      updating[system] = true;
+      return fetcher[system](location)
+        .then((bikes) => {
+          if(markers[system] && map) map.removeLayer(markers[system]);
+          removeSpinner(system);
+          markers[system] = L.layerGroup();
+          bikes.map(({latitude, longitude, label, percentBikes}) => {
+            const marker = L.marker([latitude, longitude], {
+              icon: icon(`${system}${percentBikes===undefined?'':percentBikes}`),
+            });
+            marker.bindPopup(label);
+            markers[system].addLayer(marker);
           });
-
-          map.addLayer(cabiMarkers);
+          map.addLayer(markers[system]);
         });
-      updating.jump = true;
-      fetch('https://app.socialbicycles.com/api/networks/136/bikes.json', {cors: true})
-        .then(resp => resp.json())
-        .then(({items}) => {
-          if(jumpMarkers && map) map.removeLayer(jumpMarkers);
-          removeSpinner('jump');
-          jumpMarkers = L.layerGroup();
-          items.map(({name, address, current_position}) => {
-            const marker = L.marker(current_position.coordinates.reverse(),
-                                  {icon: icon('jump')});
-            marker.bindPopup(`<div>${name}<p>${address}</p></div>`);
-            jumpMarkers.addLayer(marker);
-          });
-          map.addLayer(jumpMarkers);
-        });
-    }
-    if (location) {
-      updating.mobike = true;
-      fetch(`${ORIGIN}/mobike?longitude=${location.lng}&latitude=${location.lat}`)
-        .then(resp => resp.json())
-        .then(({object}) => {
-          if(mobikeMarkers && map) map.removeLayer(mobikeMarkers);
-          removeSpinner('mobike');
-          mobikeMarkers = L.layerGroup();
-          object.map(({distX, distY}) => {
-            const marker = L.marker([distY, distX], {icon: icon('mobike')});
-            marker.bindPopup('<div>MOBIKE</div>');
-            mobikeMarkers.addLayer(marker);
-          });
-          map.addLayer(mobikeMarkers);
-        });
-      updating.limebike = true;
-      fetch(`${ORIGIN}/limebike?longitude=${location.lng}&latitude=${location.lat}`)
-        .then(resp => resp.json())
-        .then(({data}) => {
-          if(limebikeMarkers && map) map.removeLayer(limebikeMarkers);
-          removeSpinner('limebike');
-          limebikeMarkers = L.layerGroup();
-          data.attributes.nearby_locked_bikes.map(({attributes}) => {
-            const marker = L.marker([attributes.latitude, attributes.longitude], {icon: icon('limebike')});
-            marker.bindPopup('<div>LIMEBIKE</div>');
-            limebikeMarkers.addLayer(marker);
-          });
-          map.addLayer(limebikeMarkers);
-        });
-      updating.ofo = true;
-      fetch(`${ORIGIN}/ofo?longitude=${location.lng}&latitude=${location.lat}`)
-        .then(resp => resp.json())
-        .then(({values}) => {
-          if(ofoMarkers && map) map.removeLayer(ofoMarkers);
-          removeSpinner('ofo');
-          ofoMarkers = L.layerGroup();
-          values.cars.map(({lat, lng}) => {
-            const marker = L.marker([lat, lng], {icon: icon('ofo')});
-            marker.bindPopup('<div>OFO</div>');
-            ofoMarkers.addLayer(marker);
-          });
-          map.addLayer(ofoMarkers);
-        });
-    }
+    });
   };
 
 
