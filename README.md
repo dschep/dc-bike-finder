@@ -1,4 +1,4 @@
-# :bike: DC Bike Finder
+# ![bikefinder icon](/client/dist/img/favicons/favicon-32x32.png) DC Bike Finder
 
 A webapp for finding bikeshares in DC! Currently supports:
 
