@@ -120,6 +120,7 @@
   L.control.locate({locateOptions: {
     maxZoom: 15,
     enableHighAccuracy: true,
+    watch: true,
   }}).addTo(map).start();
   map.on('locationfound', function({latlng}) {
     location = latlng;
