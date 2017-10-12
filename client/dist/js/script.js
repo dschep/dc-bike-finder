@@ -1,5 +1,5 @@
 (function() {
-  ORIGIN = 'https://0v0e2r58h8.execute-api.us-east-1.amazonaws.com/dev';
+  const ORIGIN = 'https://0v0e2r58h8.execute-api.us-east-1.amazonaws.com/dev';
   const icon = iconName => L.icon({
     iconUrl: `img/${iconName}.png`,
     iconSize: [48, 48],
@@ -30,7 +30,7 @@
         .then(resp => resp.json())
         .then(({stationBeanList}) => stationBeanList.map(
           ({latitude, longitude, stationName, availableDocks, availableBikes}) => ({
-			percentBikes: Math.round(availableBikes/(availableBikes+availableDocks)*10) * 10,
+            percentBikes: Math.round(availableBikes/(availableBikes+availableDocks)*10) * 10,
             latitude,
             longitude,
             label: `<div>
