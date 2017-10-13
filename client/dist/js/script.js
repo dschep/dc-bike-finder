@@ -1,5 +1,6 @@
 (function() {
   const ORIGIN = 'https://0v0e2r58h8.execute-api.us-east-1.amazonaws.com/dev';
+  let userHasDragged = false;
   const icon = iconName => L.icon({
     iconUrl: `img/${iconName}.png`,
     iconSize: [48, 48],
@@ -128,15 +129,21 @@
   // hacking this in JS bc of Leaflet/Leaflet#466
   document.querySelector('.leaflet-control-attribution a').target = '_blank';
 
-  L.control.locate({locateOptions: {
-    maxZoom: 15,
-    enableHighAccuracy: true,
-    watch: true,
-  }}).addTo(map).start();
+  L.control.locate({
+    setView: false,
+    locateOptions: {
+      maxZoom: 15,
+      enableHighAccuracy: true,
+      watch: true,
+    },
+  }).addTo(map).start();
   map.on('locationfound', function({latlng}) {
+    if (!userHasDragged)
+      map.setView(latlng, 15);
     location = latlng;
     updateMarkers(true);
   });
+  map.on('dragend', () => {userHasDragged = true;});
 
   map.addControl(new ReloadControl());
 
