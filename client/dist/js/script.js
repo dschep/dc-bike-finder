@@ -66,9 +66,20 @@
           latitude: attributes.latitude,
           label: 'limebike',
         }))),
+      zagster: (location) => fetch(`${ORIGIN}/mbike`)
+        .then(resp => resp.json())
+        .then(({data}) => data.map(({geo, availableDockingSpaces, bikes, name}) => ({
+          longitude: geo.coordinates[0],
+          latitude: geo.coordinates[1],
+          percentBikes: Math.round(bikes/(bikes+availableDockingSpaces)*10) * 10,
+          label: `<div>
+                    <h3>${name}</h3>
+                    <p>Bikes: ${bikes} - Slots: ${availableDockingSpaces}</p>
+                  </div>`,
+        }))),
     };
 
-    ['cabi', 'jump', 'ofo', 'mobike', 'limebike'].map((system) => {
+    ['cabi', 'jump', 'ofo', 'mobike', 'limebike', 'zagster'].map((system) => {
       updating[system] = true;
       return fetcher[system](location)
         .then((bikes) => {

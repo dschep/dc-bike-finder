@@ -8,6 +8,7 @@ BIKESHARE_URL = 'http://feeds.capitalbikeshare.com/stations/stations.json'
 MOBIKE_URL = 'https://mwx.mobike.com/mobike-api/rent/nearbyBikesInfo.do'
 LIMEBIKE_URL = 'https://web-production.lime.bike/api/public/v1/views/bikes'
 OFO_URL = 'http://one.ofo.so/nearbyofoCar'
+MBIKE_URL = 'https://zapi.zagster.com/api/v1/bikeshares/7768436bbb7442b809bce34c/stations'
 
 
 @cors
@@ -58,4 +59,11 @@ def ofo_proxy(event, context):
             'source': '1',
         },
     )
+    return resp.json()
+
+
+@cors
+@jsonify
+def mbike_proxy(event, context):
+    resp = requests.get(MBIKE_URL)
     return resp.json()

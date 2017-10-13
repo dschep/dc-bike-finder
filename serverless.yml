@@ -46,6 +46,13 @@ functions:
       - http:
           path: /ofo
           method: get
+  mbike:
+    handler: bikeshare.mbike_proxy
+    timeout: 30
+    events:
+      - http:
+          path: /mbike
+          method: get
 
 plugins:
   - serverless-finch
