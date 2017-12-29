@@ -7,6 +7,7 @@ html, body, #map {
 } 
 
 /* smaller popups */
+/*
 .leaflet-popup-content p, .leaflet-popup-content h3 {
     margin: 0;
 }
@@ -62,17 +63,22 @@ html, body, #map {
         transform:rotate(360deg);
     }
 }
+*/
 
 /* override L.Control.Locate's mobile appearance */
+/*
 .leaflet-touch .leaflet-control-locate {
     border: 2px solid rgba(0, 0, 0, 0.2);
     height: 30px;
     width: 30px;
 }
+*/
 /* override L.Control.Locate's padding */
+/*
 .leaflet-control-locate a {
     padding: 0;
 }
 .leaflet-marker-icon {
     filter: drop-shadow(1px 1px 3px #222);
 }
+*/

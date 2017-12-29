@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 requests = "*"
+lambda-decorators = "*"
 
 [dev-packages]
 

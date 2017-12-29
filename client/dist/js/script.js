@@ -129,6 +129,7 @@
   // hacking this in JS bc of Leaflet/Leaflet#466
   document.querySelector('.leaflet-control-attribution a').target = '_blank';
 
+  L.control.layers({}, markers).addTo(map);
   L.control.locate({
     setView: false,
     locateOptions: {
