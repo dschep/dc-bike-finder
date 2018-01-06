@@ -1,5 +1,5 @@
 (function() {
-  const ORIGIN = 'https://0v0e2r58h8.execute-api.us-east-1.amazonaws.com/dev';
+  const ORIGIN = 'https://2xzl9z8rqc.execute-api.us-east-1.amazonaws.com/prod';
   let userHasDragged = false;
   const icon = iconName => L.icon({
     iconUrl: `img/${iconName}.png`,
