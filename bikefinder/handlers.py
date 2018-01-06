@@ -63,7 +63,7 @@ def ofo_proxy(event, context):
             'token': boto3.client('ssm').get_parameter(
                 Name=f"/bikefinder/{os.environ.get('STAGE', '')}/ofo_token",
                 WithDecryption=True,
-            ),
+            )['Parameter']['Value'],
             'source': '1',
         },
     )
