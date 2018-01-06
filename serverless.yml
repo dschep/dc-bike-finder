@@ -15,38 +15,38 @@ custom:
 
 package:
   include:
-    - bikeshare.py
+    - bikefinder/**/*.py
   exclude:
     - '**/*'
 
 functions:
   cabi:
-    handler: bikeshare.bikeshare_proxy
+    handler: bikefinder/handlers.bikeshare_proxy
     events:
       - http:
           path: /cabi
           method: get
   mobike:
-    handler: bikeshare.mobike_proxy
+    handler: bikefinder/handlers.mobike_proxy
     events:
       - http:
           path: /mobike
           method: get
   limebike:
-    handler: bikeshare.limebike_proxy
+    handler: bikefinder/handlers.limebike_proxy
     events:
       - http:
           path: /limebike
           method: get
   ofo:
-    handler: bikeshare.ofo_proxy
+    handler: bikefinder/handlers.ofo_proxy
     timeout: 30
     events:
       - http:
           path: /ofo
           method: get
   mbike:
-    handler: bikeshare.mbike_proxy
+    handler: bikefinder/handlers.mbike_proxy
     timeout: 30
     events:
       - http:
