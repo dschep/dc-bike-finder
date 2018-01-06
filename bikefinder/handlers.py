@@ -1,9 +1,8 @@
 import os
 
+import boto3
 import requests
 from lambda_decorators import cors_headers, json_http_resp
-
-import slscrypt
 
 
 BIKESHARE_URL = 'http://feeds.capitalbikeshare.com/stations/stations.json'
@@ -61,7 +60,10 @@ def ofo_proxy(event, context):
         data={
             'lat': event['queryStringParameters'].get('latitude', ''),
             'lng': event['queryStringParameters'].get('longitude', ''),
-            'token': slscrypt.get('OFO_TOKEN'),
+            'token': boto3.client('ssm').get_parameter(
+                Name=f"/bikefinder/{os.environ.get('STAGE', '')}/ofo_token",
+                WithDecryption=True,
+            ),
             'source': '1',
         },
     )
