@@ -16,7 +16,6 @@ custom:
 package:
   include:
     - bikeshare.py
-    - slsutils.py
   exclude:
     - '**/*'
 
