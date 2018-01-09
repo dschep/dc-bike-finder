@@ -18,7 +18,7 @@ class database(LambdaDecorator):
         self.db = records.Database(boto3.client('ssm').get_parameter(
             Name=f"/bikefinder/{os.environ.get('STAGE', '')}/db_url",
             WithDecryption=True)['Parameter']['Value'])
-        register(self.db.db.connection)
+        register(self.db.db.connection) # self.records_db.sqalchemy_connection.dbapi_connection
         context.db = self.db
 
         return event, context
