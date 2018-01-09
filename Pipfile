@@ -7,6 +7,10 @@ name = "pypi"
 requests = "*"
 lambda-decorators = "*"
 "boto3" = "*"
+"psycopg2" = "*"
+postgis = "*"
+attrs = "*"
+records = "*"
 
 [dev-packages]
 

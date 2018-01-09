@@ -6,7 +6,7 @@ provider:
   name: aws
   runtime: python3.6
   environment:
-    CORS_ORIGIN: '*' #https://share.bikehero.io/
+    CORS_ORIGIN: ${self:custom.${self:custom.stage}:corsOrigin}
     STAGE: ${self:custom.stage}
   iamRoleStatements:
     - Effect: Allow
@@ -30,6 +30,11 @@ custom:
   # serverless-finch config
   client:
     bucketName: share.bikehero.io
+  # per stage configs
+  prod:
+    corsOrigin: https://share.bikehero.io/
+  dev:
+    corsOrigin: '*'
 
 package:
   include:
@@ -70,6 +75,19 @@ functions:
       - http:
           path: /mbike
           method: get
+
+  jump:
+    handler: bikefinder/handlers.jump
+    events:
+      - http:
+          path: /jump
+          method: get
+
+  scrape_jump:
+    handler: bikefinder/scraper.scrape_jump
+    timeout: 300
+    events:
+      - schedule: 'rate(1 minute)'
 
 plugins:
   - serverless-finch

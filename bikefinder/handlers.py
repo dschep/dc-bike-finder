@@ -4,6 +4,9 @@ import boto3
 import requests
 from lambda_decorators import cors_headers, json_http_resp
 
+from bikefinder.models import Bike, Bikes
+from bikefinder.util import database
+
 
 BIKESHARE_URL = 'http://feeds.capitalbikeshare.com/stations/stations.json'
 MOBIKE_URL = 'https://mwx.mobike.com/mobike-api/rent/nearbyBikesInfo.do'
@@ -76,3 +79,11 @@ def ofo_proxy(event, context):
 def mbike_proxy(event, context):
     resp = requests.get(MBIKE_URL)
     return resp.json()
+
+
+@cors_headers(origin=os.environ.get('CORS_ORIGIN', 'localhost'),
+              credentials=True)
+@json_http_resp
+@database
+def jump(event, context):
+    return Bikes(Bike(**record) for record in context.db.query('select * from bikes')).geojson
