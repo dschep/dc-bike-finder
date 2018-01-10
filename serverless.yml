@@ -6,7 +6,7 @@ provider:
   name: aws
   runtime: python3.6
   environment:
-    CORS_ORIGIN: ${self:custom.${self:custom.stage}:corsOrigin}
+    CORS_ORIGIN: ${self:custom.${self:custom.stage}.corsOrigin}
     STAGE: ${self:custom.stage}
   iamRoleStatements:
     - Effect: Allow
