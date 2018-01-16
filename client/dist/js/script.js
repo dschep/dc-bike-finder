@@ -39,12 +39,12 @@
                       <p>Bikes: ${availableBikes} - Slots: ${availableDocks}</p>
                     </div>`,
           }))),
-      jump: () => fetch('https://app.socialbicycles.com/api/networks/136/bikes.json', {cors: true})
+      jump: () => fetch('https://dc.jumpmobility.com/opendata/free_bike_status.json', {cors: true})
         .then(resp => resp.json())
-        .then(({items}) => items.map(({name, address, current_position}) => ({
-          longitude: current_position.coordinates[0],
-          latitude: current_position.coordinates[1],
-          label: `<div>${name}<p>${address}</p></div>`,
+        .then(({data: {bikes}}) => bikes.map(({name, lon, lat}) => ({
+          longitude: lon,
+          latitude: lat,
+          label: `<div>${name}</div>`,
         }))),
       ofo: (location) => !location?Promise.resolve([]):fetch(`${ORIGIN}/ofo?longitude=${location.lng}&latitude=${location.lat}`)
         .then(resp => resp.json())
