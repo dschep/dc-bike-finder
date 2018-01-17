@@ -20,12 +20,9 @@
   const map = L.map('map').setView([38.91, -77.04], 11);
   const removeSpinner = (finishedService) => {
     updating[finishedService] = false;
-    if (Object.values(updating).every(i => !i))
-      document.querySelector('.reload-control .icon').classList.remove('spin');
   };
 
   const updateMarkers = (locationOnly = false) => {
-    document.querySelector('.reload-control .icon').classList.add('spin');
     const fetcher = {
       cabi: () => fetch(`${ORIGIN}/cabi`)
         .then(resp => resp.json())
@@ -99,27 +96,6 @@
     });
   };
 
-
-  const ReloadControl = L.Control.extend({
-    options: {
-      position: 'topright'
-    },
-
-    onAdd: function (map) {
-      const container = L.DomUtil.create('div', 'reload-control leaflet-bar');
-      const innerContainer = L.DomUtil.create('a', 'leaflet-bar-part leaflet-bar-part-single', container);
-      L.DomUtil.create('div', 'icon', innerContainer);
-
-      L.DomEvent
-      .addListener(container, 'click', L.DomEvent.stop)
-      .addListener(container, 'click', updateMarkers, this);
-      L.DomEvent.disableClickPropagation(container);
-
-      return container;
-    }
-  });
-
-
   L.tileLayer('https://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey={apikey}', {
     attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     apikey: '43a3528946814e018e2667b156d87992',
@@ -129,7 +105,6 @@
   // hacking this in JS bc of Leaflet/Leaflet#466
   document.querySelector('.leaflet-control-attribution a').target = '_blank';
 
-  L.control.layers({}, markers).addTo(map);
   L.control.locate({
     setView: false,
     locateOptions: {
@@ -145,8 +120,6 @@
     updateMarkers(true);
   });
   map.on('dragend', () => {userHasDragged = true;});
-
-  map.addControl(new ReloadControl());
 
   updateMarkers();
   window.setTimeout(updateMarkers, 60000);
