@@ -16,11 +16,11 @@ def scrape_bikeshare(event, context):
 @no_retry_on_failure
 @database
 def scrape_jump(event, context):
-    resp = requests.get('https://app.socialbicycles.com/api/networks/136/bikes.json')
+    resp = requests.get('https://dc.jumpmobility.com/opendata/free_bike_status.json')
     bikes = Bikes.from_sobi_json(resp.json())
     for bike in bikes:
         context.db.query("""
-                         insert into bike_locations (provider, bike_id, location)
-                         values (:provider, :bike_id, :location)
+                         insert into bike_locations (provider, bike_id, location, raw)
+                         values (:provider, :bike_id, :location, :raw)
                          """, **asdict(bike))
     return Bikes(Bike(**record) for record in context.db.query('select * from bikes')).geojson

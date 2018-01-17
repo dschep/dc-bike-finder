@@ -1,3 +1,4 @@
+import json
 from collections import UserList
 from datetime import datetime
 
@@ -11,6 +12,7 @@ class Bike:
     location: Point
     location_id: int = None
     created: datetime = None
+    raw: bytes = None
 
     @property
     def geojson(self):
@@ -29,12 +31,13 @@ class Bike:
     def from_sobi_json(cls, bike):
         return cls(
             provider='JUMP',
-            bike_id=bike['id'],
+            bike_id=bike['bike_id'],
             location=Point(
-                x=bike['current_position']['coordinates'][0],
-                y=bike['current_position']['coordinates'][1],
+                x=bike['lon'],
+                y=bike['lat'],
                 srid=4326,
             ),
+            raw=json.dumps(bike),
         )
 
 
@@ -48,4 +51,4 @@ class Bikes(UserList):
 
     @classmethod
     def from_sobi_json(cls, json):
-        return cls([Bike.from_sobi_json(bike) for bike in json['items']])
+        return cls([Bike.from_sobi_json(bike) for bike in json['data']['bikes']])
