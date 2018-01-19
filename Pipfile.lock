@@ -38,24 +38,24 @@
         },
         "boto3": {
             "hashes": [
-                "sha256:941641b6b2fc10c5f9e8c2cbb14eca2620e2d7f605d38d763e03674a1879dc55",
-                "sha256:895b5899bb81daf0190b4484f5595e88d01545875dc2a7bf36852cd0b9df045b"
+                "sha256:744b5080ea8cefb9d831e21e959ab1bd46a5c0918fdd806534090546137a355a",
+                "sha256:8178acd18c8bc92e35eaf6dd4e9900ccc2ccc927b5d64d42f87816118de67646"
             ],
-            "version": "==1.5.16"
+            "version": "==1.5.18"
         },
         "botocore": {
             "hashes": [
-                "sha256:52f60526afc6e7bad415a9c7f5176af71f0b11e521c0985256a9c8106a6c9096",
-                "sha256:081326d5c931954b4000b37fdbd69cc53080dfc92ba237399820a586a104fd66"
+                "sha256:213b3b8157bfd056d230fd418e739da330e102a26def193f0f5efab5a8796ea7",
+                "sha256:3573298ddc68c711a827085ff26631a3e568531ea5441ac44230241b5a5a1c2f"
             ],
-            "version": "==1.8.30"
+            "version": "==1.8.32"
         },
         "certifi": {
             "hashes": [
-                "sha256:244be0d93b71e93fc0a0a479862051414d0e00e16435707e5bf5000f92e04694",
-                "sha256:5ec74291ca1136b40f0379e1128ff80e866597e4e2c1e755739a913bbc3613c0"
+                "sha256:14131608ad2fd56836d33a71ee60fa1c82bc9d2c8d98b7bdbc631fe1b3cd1296",
+                "sha256:edbc3f203427eef571f79a7692bb160a2b0f7ccaa31953e99bd17e307cf63f7d"
             ],
-            "version": "==2017.11.5"
+            "version": "==2018.1.18"
         },
         "chardet": {
             "hashes": [
