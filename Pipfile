@@ -1,9 +1,12 @@
 [[source]]
+
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
 
+
 [packages]
+
 requests = "*"
 lambda-decorators = "*"
 "boto3" = "*"
@@ -11,8 +14,13 @@ lambda-decorators = "*"
 postgis = "*"
 attrs = "*"
 records = "*"
+aiohttp = "*"
+
 
 [dev-packages]
 
+
+
 [requires]
+
 python_version = "3.6"

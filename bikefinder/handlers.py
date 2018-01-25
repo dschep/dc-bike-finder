@@ -5,7 +5,7 @@ import requests
 from lambda_decorators import cors_headers, json_http_resp
 
 from bikefinder.models import Bike, Bikes
-from bikefinder.util import database
+from bikefinder.util import database, search_points
 
 
 BIKESHARE_URL = 'http://feeds.capitalbikeshare.com/stations/stations.json'
@@ -86,4 +86,33 @@ def mbike_proxy(event, context):
 @json_http_resp
 @database
 def jump(event, context):
-    return Bikes(Bike(**record) for record in context.db.query('select * from bikes')).geojson
+    return Bikes(Bike(**record) for record in context.db.query(
+        "select * from bikes where provider='JUMP'")).geojson
+
+
+@cors_headers(origin=os.environ.get('CORS_ORIGIN', 'localhost'),
+              credentials=True)
+@json_http_resp
+@database
+def mobike_all(event, context):
+    return Bikes(Bike(**record) for record in context.db.query(
+        "select * from bikes where provider='mobike'")).geojson
+
+
+@cors_headers(origin=os.environ.get('CORS_ORIGIN', 'localhost'),
+              credentials=True)
+@json_http_resp
+def search_pattern(event, context):
+    return {
+        'type': 'FeatureCollection',
+        'features': [
+            {
+                'type': 'Feature',
+                'geometry': {
+                    'type': 'Point',
+                    'coordinates': [lng, lat],
+                },
+            }
+            for lat, lng in search_points()
+        ]
+    }

@@ -31,3 +31,17 @@ class database(LambdaDecorator):
         if hasattr(self, 'db'): # in cas something went wrong before setting self.db
             self.db.close()
         raise exception
+
+def seq(start, stop, step=1):
+    n = int(round((stop - start)/float(step)))
+    if n > 1:
+        return([start + step*i for i in range(n+1)])
+    else:
+        return([])
+
+
+def search_points(top_left=(39.010, -77.151), bottom_right=(38.812, -76.901),
+                  delta_lng=0.007, delta_lat=0.004):
+    for lat in seq(bottom_right[0], top_left[0], delta_lat):
+        for lng in seq(bottom_right[1], top_left[1], -delta_lng):
+            yield (lat, lng)

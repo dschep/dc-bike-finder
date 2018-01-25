@@ -40,6 +40,18 @@ class Bike:
             raw=json.dumps(bike),
         )
 
+    @classmethod
+    def from_mobike_json(cls, bike):
+        return cls(
+            provider='mobike',
+            bike_id=bike['bikeIds'],
+            location=Point(
+                x=bike['distX'],
+                y=bike['distY'],
+                srid=4326,
+            ),
+        )
+
 
 class Bikes(UserList):
     @property
@@ -52,3 +64,7 @@ class Bikes(UserList):
     @classmethod
     def from_sobi_json(cls, json):
         return cls([Bike.from_sobi_json(bike) for bike in json['data']['bikes']])
+
+    @classmethod
+    def from_mobike_json(cls, json):
+        return cls([Bike.from_mobike_json(bike) for bike in json['object']])
