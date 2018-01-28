@@ -1,5 +1,7 @@
 (function() {
-  const ORIGIN = 'https://2xzl9z8rqc.execute-api.us-east-1.amazonaws.com/prod';
+  const ORIGIN = window.location.host == 'share.bikhero.io'
+    ? 'https://2xzl9z8rqc.execute-api.us-east-1.amazonaws.com/prod'
+    : 'https://wahzhpvf98.execute-api.us-east-1.amazonaws.com/dev';
   let userHasDragged = false;
   const icon = iconName => L.icon({
     iconUrl: `img/${iconName}.png`,

@@ -32,9 +32,14 @@ custom:
     bucketName: share.bikehero.io
   # per stage configs
   prod:
-    corsOrigin: https://share.bikehero.io/
+    corsOrigin: https://share.bikehero.io
+    schedules:
+      jump: []
   dev:
     corsOrigin: '*'
+    schedules:
+      jump:
+        - schedule: 'rate(1 minute)'
 
 package:
   include:
@@ -61,6 +66,12 @@ functions:
       - http:
           path: /limebike
           method: get
+  ofo_request_token:
+    handler: bikefinder/handlers.ofo_request_token
+    timeout: 30
+  ofo_login_with_token:
+    handler: bikefinder/handlers.ofo_login_with_token
+    timeout: 30
   ofo:
     handler: bikefinder/handlers.ofo_proxy
     timeout: 30
@@ -93,8 +104,7 @@ functions:
   scrape_jump:
     handler: bikefinder/scraper.scrape_jump
     timeout: 300
-    events:
-      - schedule: 'rate(1 minute)'
+    events: ${self:custom.${self:custom.stage}.schedules.jump}
 
   scrape_mobike:
     handler: bikefinder/scraper.scrape_mobike

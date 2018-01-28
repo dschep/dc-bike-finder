@@ -73,6 +73,37 @@ def ofo_proxy(event, context):
     return resp.json()
 
 
+def ofo_request_token(event, context):
+    """
+    Request a totp token be sent to your phone.
+
+    Event keys:
+        * tel
+        * ccc
+        * lat
+        * lng
+    """
+    resp = requests.post('https://one.ofo.com/verifyCode_v2', data={**event, 'type': 1})
+    return resp.json()
+
+
+def ofo_login_with_token(event, context):
+    """
+    Login with a totp token sent to your phone.
+
+    Event keys:
+        * tel
+        * ccc
+        * lat
+        * lng
+        * code
+    """
+    resp = requests.post('https://one.ofo.com/api/login_v2', data=event)
+    return resp.json()
+
+
+
+
 @cors_headers(origin=os.environ.get('CORS_ORIGIN', 'localhost'),
               credentials=True)
 @json_http_resp
