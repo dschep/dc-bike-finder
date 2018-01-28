@@ -77,7 +77,7 @@
         }))),
     };
 
-    ['cabi', 'jump', 'ofo', 'mobike', 'limebike', 'zagster'].map((system) => {
+    ['cabi', 'jump', 'ofo', 'mobike',/* 'limebike',*/ 'zagster'].map((system) => {
       updating[system] = true;
       return fetcher[system](location)
         .then((bikes) => {

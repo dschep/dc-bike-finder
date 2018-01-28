@@ -1,5 +1,9 @@
 {
     "name": "DC Bike Finder",
+    "short_name": "BikeFinder",
+    "description": "Find Bikeshares in Washington, DC",
+    "start_url": "/index.html",
+    "display": "standalone",
     "icons": [
         {
             "src": "/img/favicons/android-chrome-192x192.png",
@@ -11,6 +15,5 @@
             "sizes": "512x512",
             "type": "image/png"
         }
-    ],
-    "display": "standalone"
+    ]
 }
