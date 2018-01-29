@@ -1,5 +1,5 @@
 (function() {
-  const ORIGIN = window.location.host == 'share.bikhero.io'
+  const ORIGIN = window.location.host == 'share.bikehero.io'
     ? 'https://2xzl9z8rqc.execute-api.us-east-1.amazonaws.com/prod'
     : 'https://wahzhpvf98.execute-api.us-east-1.amazonaws.com/dev';
   let userHasDragged = false;
