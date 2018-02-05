@@ -31,10 +31,25 @@
     "default": {
         "aiohttp": {
             "hashes": [
+                "sha256:834f687b806fbf49cb135b5a208b5c27338e19c219d6e09e9049936e01e8bea8",
+                "sha256:6b8c5a00432b8a5a083792006e8fdfb558b8b10019ce254200855264d3a25895",
+                "sha256:7b407c22b0ab473ffe0a7d3231f2084a8ae80fdb64a31842b88d57d6b7bdab7c",
+                "sha256:14821eb8613bfab9118be3c55afc87bf4cef97689896fa0874c6877b117afbeb",
+                "sha256:8f32a4e157bad9c60ebc38c3bb93fcc907a020b017ddf8f7ab1580390e21940e",
                 "sha256:82a9068d9cb15eb2d99ecf39f8d56b4ed9f931a77a3622a0de747465fd2a7b96",
                 "sha256:7ac6378ae364d8e5e5260c7224ea4a1965cb6f4719f15d0552349d0b0cc93953",
+                "sha256:5a952d4af7de5f78dfb3206dbc352717890b37d447f0bbd4b5969b3c8bb713af",
+                "sha256:b25c7720c495048ed658086a29925ab485ac7ececf1b346f2b459e5431d85016",
+                "sha256:528b0b811b6260a79222b055664b82093d01f35fe5c82521d8659cb2b28b8044",
+                "sha256:46ace48789865a89992419205024ae451d577876f9919fbb0f22f71189822dea",
+                "sha256:5436ca0ed752bb05a399fc07dc86dc23c756db523a3b7d5da46a457eacf4c4b5",
                 "sha256:f5e7d41d924a1d5274060c467539ee0c4f3bab318c1671ad65abd91f6b637baf",
                 "sha256:a8c12f3184c7cad8f66cae6c945d2c97e598b0cb7afd655a5b9471475e67f30e",
+                "sha256:756fc336a29c551b02252685f01bc87116bc9b04bbd02c1a6b8a96b3c6ad713b",
+                "sha256:cf790e61c2af0278f39dcedad9a22532bf81fb029c2cd73b1ceba7bea062c908",
+                "sha256:44c9cf24e63576244c13265ef0786b56d6751f5fb722225ecc021d6ecf91b4d2",
+                "sha256:ef1a36a16e72b6689ce0a6c7fc6bd88837d8fef4590b16bd72817644ae1f414d",
+                "sha256:3a4cdb9ca87c099d8ba5eb91cb8f000b60c21f8c1b50c75e04e8777e903bd278",
                 "sha256:f72bb19cece43483171264584bbaaf8b97717d9c0f244d1ef4a51df1cdb34085",
                 "sha256:c77e29243a79e376a1b51d71a13df4a61bc54fd4d9597ce3790b8d82ec6eb44d",
                 "sha256:8adda6583ba438a4c70693374e10b60168663ffa6564c5c75d3c7a9055290964"
@@ -138,10 +153,10 @@
         },
         "lambda-decorators": {
             "hashes": [
-                "sha256:28b27af621f4756366567ffb8eceeabc29288acafdff0d4250518eecdcd45e97",
-                "sha256:5b63c020eeb6946e4d0b85c03ac91b8483271cfb27ad7abc1b94f816e04299c7"
+                "sha256:1bc738b53a144b0775ee9a68a7b83e1c857230fb9f72e1416bd72fb70a03a8ad",
+                "sha256:7651fc6a825c9c92f689d2d6f1a7313bf98a6d2a1a896ad431e97eb06f765a58"
             ],
-            "version": "==0.1b3"
+            "version": "==0.1"
         },
         "multidict": {
             "hashes": [
