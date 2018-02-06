@@ -10,7 +10,10 @@ from bikefinder.util import database, search_points
 
 BIKESHARE_URL = 'http://feeds.capitalbikeshare.com/stations/stations.json'
 MOBIKE_URL = 'https://mwx.mobike.com/mobike-api/rent/nearbyBikesInfo.do'
-LIMEBIKE_URL = 'https://web-production.lime.bike/api/public/v1/views/bikes'
+LIMEBIKE_URL = 'https://lime.bike/api/partners/v1/bikes'
+LIMEBIKE_HEADERS = {'Authorization': 'Bearer limebike-PMc3qGEtAAXqJa'}
+LIMEBIKE_PARAMS = {'region': 'Washington DC Proper'}
+SPIN_URL = 'https://web.spin.pm/api/gbfs/v1/free_bike_status'
 OFO_URL = 'http://one.ofo.so/nearbyofoCar'
 MBIKE_URL = 'https://zapi.zagster.com/api/v1/bikeshares/7768436bbb7442b809bce34c/stations'
 
@@ -44,13 +47,17 @@ def mobike_proxy(event, context):
 def limebike_proxy(event, context):
     resp = requests.get(
         LIMEBIKE_URL,
-        params={
-            'map_center_latitude': event['queryStringParameters'].get('latitude', ''),
-            'map_center_longitude': event['queryStringParameters'].get('longitude', ''),
-            'user_latitude': event['queryStringParameters'].get('latitude', ''),
-            'user_longitude': event['queryStringParameters'].get('longitude', ''),
-        },
+        headers=LIMEBIKE_HEADERS,
+        params=LIMEBIKE_PARAMS,
     )
+    return resp.json()
+
+
+@cors_headers(origin=os.environ.get('CORS_ORIGIN', 'localhost'),
+              credentials=True)
+@json_http_resp
+def spin_proxy(event, context):
+    resp = requests.get(SPIN_URL)
     return resp.json()
 
 

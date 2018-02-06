@@ -16,6 +16,7 @@
     cabi: false,
     jump: false,
     limebike: false,
+    spin: false,
     ofo: false,
   }
 
@@ -59,12 +60,19 @@
           latitude: distY,
           label: 'mobike',
         }))),
-      limebike: (location) => !location?Promise.resolve([]):fetch(`${ORIGIN}/limebike?longitude=${location.lng}&latitude=${location.lat}`)
+      limebike: () => fetch(`${ORIGIN}/limebike`)
         .then(resp => resp.json())
-        .then(({data}) => data.attributes.nearby_locked_bikes.map(({attributes}) => ({
-          longitude: attributes.longitude,
-          latitude: attributes.latitude,
+        .then(({data}) => data.map(({attributes: {latitude, longitude}}) => ({
+          longitude,
+          latitude,
           label: 'limebike',
+        }))),
+      spin: () => fetch(`${ORIGIN}/spin`)
+        .then(resp => resp.json())
+        .then(({data: {bikes}}) => bikes.map(({lat, lon}) => ({
+          longitude: lon,
+          latitude: lat,
+          label: 'spin',
         }))),
       zagster: (location) => fetch(`${ORIGIN}/mbike`)
         .then(resp => resp.json())
@@ -79,7 +87,7 @@
         }))),
     };
 
-    ['cabi', 'jump', 'ofo', 'mobike',/* 'limebike',*/ 'zagster'].map((system) => {
+    ['cabi', 'jump', 'ofo', 'mobike', 'limebike', 'spin', 'zagster'].map((system) => {
       updating[system] = true;
       return fetcher[system](location)
         .then((bikes) => {

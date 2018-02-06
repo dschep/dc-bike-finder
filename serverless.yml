@@ -66,6 +66,12 @@ functions:
       - http:
           path: /limebike
           method: get
+  spin:
+    handler: bikefinder/handlers.spin_proxy
+    events:
+      - http:
+          path: /spin
+          method: get
   ofo_request_token:
     handler: bikefinder/handlers.ofo_request_token
     timeout: 30
