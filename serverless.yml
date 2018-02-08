@@ -110,7 +110,7 @@ functions:
   scrape_jump:
     handler: bikefinder/scraper.scrape_jump
     timeout: 300
-    events: ${self:custom.${self:custom.stage}.schedules.jump}
+    #events: ${self:custom.${self:custom.stage}.schedules.jump}
 
   scrape_mobike:
     handler: bikefinder/scraper.scrape_mobike
