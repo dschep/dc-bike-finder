@@ -10,7 +10,15 @@
     popupAnchor: [0, -48],
   });
   let location;
-  const markers = {};
+  const markers = {
+    mobike: L.layerGroup(),
+    cabi: L.layerGroup(),
+    jump: L.layerGroup(),
+    limebike: L.layerGroup(),
+    spin: L.layerGroup(),
+    ofo: L.layerGroup(),
+    zagster: L.layerGroup(),
+  };
   const updating = {
     mobike: false,
     cabi: false,
@@ -18,9 +26,13 @@
     limebike: false,
     spin: false,
     ofo: false,
+    zagster: false,
   }
 
   const map = L.map('map').setView([38.91, -77.04], 11);
+  for (const layerGroup of Object.values(markers)) {
+    map.addLayer(layerGroup);
+  }
   const removeSpinner = (finishedService) => {
     updating[finishedService] = false;
   };
@@ -91,9 +103,8 @@
       updating[system] = true;
       return fetcher[system](location)
         .then((bikes) => {
-          if(markers[system] && map) map.removeLayer(markers[system]);
+          markers[system].clearLayers();
           removeSpinner(system);
-          markers[system] = L.layerGroup();
           bikes.map(({latitude, longitude, label, percentBikes}) => {
             const marker = L.marker([latitude, longitude], {
               icon: icon(`${system}${percentBikes===undefined?'':percentBikes}`),
@@ -101,7 +112,6 @@
             marker.bindPopup(label);
             markers[system].addLayer(marker);
           });
-          map.addLayer(markers[system]);
         });
     });
   };
@@ -130,6 +140,8 @@
     updateMarkers(true);
   });
   map.on('dragend', () => {userHasDragged = true;});
+
+  L.control.layers({}, markers).addTo(map);
 
   updateMarkers();
   window.setTimeout(updateMarkers, 60000);
