@@ -14,7 +14,13 @@ LIMEBIKE_URL = 'https://lime.bike/api/partners/v1/bikes'
 LIMEBIKE_HEADERS = {'Authorization': 'Bearer limebike-PMc3qGEtAAXqJa'}
 LIMEBIKE_PARAMS = {'region': 'Washington DC Proper'}
 SPIN_URL = 'https://web.spin.pm/api/gbfs/v1/free_bike_status'
-OFO_URL = 'http://one.ofo.so/nearbyofoCar'
+OFO_URL = 'http://ofo-global.open.ofo.com/api/bike'
+OFO_DATA = {
+    'token':'c902b87e3ce8f9f95f73fe7ee14e81fe',
+    'name':'Washington',
+    'lat': 38.894432,
+    'lng': -77.013655,
+}
 MBIKE_URL = 'https://zapi.zagster.com/api/v1/bikeshares/7768436bbb7442b809bce34c/stations'
 
 
@@ -67,15 +73,7 @@ def spin_proxy(event, context):
 def ofo_proxy(event, context):
     resp = requests.post(
         OFO_URL,
-        data={
-            'lat': event['queryStringParameters'].get('latitude', ''),
-            'lng': event['queryStringParameters'].get('longitude', ''),
-            'token': boto3.client('ssm').get_parameter(
-                Name=f"/bikefinder/{os.environ.get('STAGE', '')}/ofo_token",
-                WithDecryption=True,
-            )['Parameter']['Value'],
-            'source': '1',
-        },
+        data=OFO_DATA,
     )
     return resp.json()
 
