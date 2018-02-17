@@ -79,7 +79,7 @@
           latitude,
           label: 'limebike',
         }))),
-      spin: () => fetch(`${ORIGIN}/spin`)
+      spin: () => fetch('https://web.spin.pm/api/gbfs/v1/free_bike_status', {cors: true})
         .then(resp => resp.json())
         .then(({data: {bikes}}) => bikes.map(({lat, lon}) => ({
           longitude: lon,

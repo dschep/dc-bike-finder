@@ -13,7 +13,6 @@ MOBIKE_URL = 'https://mwx.mobike.com/mobike-api/rent/nearbyBikesInfo.do'
 LIMEBIKE_URL = 'https://lime.bike/api/partners/v1/bikes'
 LIMEBIKE_HEADERS = {'Authorization': 'Bearer limebike-PMc3qGEtAAXqJa'}
 LIMEBIKE_PARAMS = {'region': 'Washington DC Proper'}
-SPIN_URL = 'https://web.spin.pm/api/gbfs/v1/free_bike_status'
 OFO_URL = 'http://ofo-global.open.ofo.com/api/bike'
 OFO_DATA = {
     'token':'c902b87e3ce8f9f95f73fe7ee14e81fe',
@@ -56,14 +55,6 @@ def limebike_proxy(event, context):
         headers=LIMEBIKE_HEADERS,
         params=LIMEBIKE_PARAMS,
     )
-    return resp.json()
-
-
-@cors_headers(origin=os.environ.get('CORS_ORIGIN', 'localhost'),
-              credentials=True)
-@json_http_resp
-def spin_proxy(event, context):
-    resp = requests.get(SPIN_URL)
     return resp.json()
 
 
