@@ -37,66 +37,81 @@
     updating[finishedService] = false;
   };
 
+  // Turn a GBFS result in to GeoJSON
+  const bikesGBFS2GeoJSON = bikes => jmespath.search(bikes,
+          '{type: `FeatureCollection`, features: data.bikes[*].{type: `Feature`, id: bike_id, geometry: {type: `Point`, coordinates: [lon, lat]}, properties: @}}');
+
+  // Turn an array of 'flat' objects. latitude, longitude keys turned into the point coordinate
+  // and remainder put into properties
+  const arrayFlatObjects2GeoJSON = array => ({
+    type: 'FeatureCollection',
+    features: array.map(object => ({
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [object.longitude, object.latitude],
+      },
+      properties: object,
+    }))
+  });
+
   const updateMarkers = (locationOnly = false) => {
     const fetcher = {
-      cabi: () => fetch(`${ORIGIN}/cabi`)
-        .then(resp => resp.json())
-        .then(({stationBeanList}) => stationBeanList.map(
-          ({latitude, longitude, stationName, availableDocks, availableBikes}) => ({
-            percentBikes: Math.round(availableBikes/(availableBikes+availableDocks)*10) * 10,
-            latitude,
-            longitude,
-            label: `<div>
-                      <h3>${stationName}</h3>
-                      <p>Bikes: ${availableBikes} - Slots: ${availableDocks}</p>
-                    </div>`,
-          }))),
+      cabi: () => Promise.all([
+        fetch('https://gbfs.capitalbikeshare.com/gbfs/en/station_information.json', {cors: true}),
+        fetch('https://gbfs.capitalbikeshare.com/gbfs/en/station_status.json', {cors: true})])
+  .then(resps => Promise.all(resps.map(resp => resp.json())))
+  .then(([info, stat]) => [
+    jmespath.search(info, '{type: `FeatureCollection`, features: data.stations[*].{type: `Feature`, id: station_id, geometry: {type: `Point`, coordinates: [lon, lat]}, properties: @}}'),
+    jmespath.search(stat, '{type: `FeatureCollection`, features: data.stations[*].{type: `Feature`, id: station_id, properties: @}}')])
+  .then(([infoGeoJSON, statGeoJSON]) => {
+    const statMap = new Map(statGeoJSON.features.map(({id, properties}) => [id, properties]));
+    infoGeoJSON.features = infoGeoJSON.features.map(({id, geometry, properties, type}) => ({
+      id,
+      type,
+      geometry,
+      properties: Object.assign({}, properties, statMap.get(id)),
+    }));
+    return infoGeoJSON;
+  }),
       jump: () => fetch('https://dc.jumpmobility.com/opendata/free_bike_status.json', {cors: true})
         .then(resp => resp.json())
-        .then(({data: {bikes}}) => bikes.map(({name, lon, lat}) => ({
-          longitude: lon,
-          latitude: lat,
-          label: `<div>${name}</div>`,
-        }))),
+        .then(bikesGBFS2GeoJSON),
       ofo: (location) => !location?Promise.resolve([]):fetch(`${ORIGIN}/ofo?longitude=${location.lng}&latitude=${location.lat}`)
         .then(resp => resp.json())
         .then(({values}) => values.cars.map(({lat, lng}) => ({
           longitude: lng,
           latitude: lat,
-          label: 'ofo',
-        }))),
+        })))
+        .then(arrayFlatObjects2GeoJSON),
       mobike: (location) => !location?Promise.resolve([]):fetch(`${ORIGIN}/mobike?longitude=${location.lng}&latitude=${location.lat}`)
         .then(resp => resp.json())
         .then(({object}) => object.map(({distX, distY}) => ({
           longitude: distX,
           latitude: distY,
-          label: 'mobike',
-        }))),
+        })))
+        .then(arrayFlatObjects2GeoJSON),
       limebike: () => fetch(`${ORIGIN}/limebike`)
         .then(resp => resp.json())
         .then(({data}) => data.map(({attributes: {latitude, longitude}}) => ({
           longitude,
           latitude,
-          label: 'limebike',
-        }))),
+        })))
+        .then(arrayFlatObjects2GeoJSON),
       spin: () => fetch('https://web.spin.pm/api/gbfs/v1/free_bike_status', {cors: true})
         .then(resp => resp.json())
-        .then(({data: {bikes}}) => bikes.map(({lat, lon}) => ({
-          longitude: lon,
-          latitude: lat,
-          label: 'spin',
-        }))),
+        .then(bikesGBFS2GeoJSON),
       zagster: (location) => fetch(`${ORIGIN}/mbike`)
         .then(resp => resp.json())
         .then(({data}) => data.map(({geo, availableDockingSpaces, bikes, name}) => ({
           longitude: geo.coordinates[0],
           latitude: geo.coordinates[1],
-          percentBikes: Math.round(bikes/(bikes+availableDockingSpaces)*10) * 10,
-          label: `<div>
-                    <h3>${name}</h3>
-                    <p>Bikes: ${bikes} - Slots: ${availableDockingSpaces}</p>
-                  </div>`,
-        }))),
+          name,
+          num_bikes_available: bikes,
+          num_docks_available: availableDockingSpaces,
+          capacity: bikes + availableDockingSpaces,
+        })))
+        .then(arrayFlatObjects2GeoJSON),
     };
 
     ['cabi', 'jump', 'ofo', 'mobike', 'limebike', 'spin', 'zagster'].map((system) => {
@@ -105,13 +120,26 @@
         .then((bikes) => {
           markers[system].clearLayers();
           removeSpinner(system);
-          bikes.map(({latitude, longitude, label, percentBikes}) => {
-            const marker = L.marker([latitude, longitude], {
-              icon: icon(`${system}${percentBikes===undefined?'':percentBikes}`),
-            });
-            marker.bindPopup(label);
-            markers[system].addLayer(marker);
+          const layer = L.geoJson(bikes, {
+            pointToLayer: ({properties, geometry: {coordinates}}, latlng) => {
+              const percentBikes = properties.num_bikes_available && Math.round(
+                properties.num_bikes_available/properties.capacity*10) * 10;
+              return L.marker(latlng, {
+                icon: icon(`${system}${percentBikes!==undefined?percentBikes:''}`),
+              }).bindPopup(`
+                <div>
+                  <h3>${properties.name||system}</h3>
+                  ${properties.num_bikes_available===undefined?'':`
+                  <p>
+                  Bikes: ${properties.num_bikes_available}
+                  -
+                  Slots: ${properties.num_docks_available}
+                  </p>
+                  `}
+                </div>`);
+            },
           });
+          markers[system].addLayer(layer);
         });
     });
   };
