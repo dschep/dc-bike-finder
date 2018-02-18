@@ -10,11 +10,10 @@ name = "pypi"
 requests = "*"
 lambda-decorators = "*"
 "boto3" = "*"
-"psycopg2" = "*"
+"psycopg2-binary" = "*"
 postgis = "*"
 attrs = "*"
 records = "*"
-aiohttp = "*"
 
 
 [dev-packages]

@@ -25,11 +25,13 @@ class database(LambdaDecorator):
 
     def after(self, response):
         self.db.close()
+        self.db._engine.dispose()
         return response
 
     def on_exception(self, exception):
         if hasattr(self, 'db'): # in cas something went wrong before setting self.db
             self.db.close()
+            self.db._engine.dispose()
         raise exception
 
 def seq(start, stop, step=1):

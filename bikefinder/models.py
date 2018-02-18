@@ -19,21 +19,48 @@ class Bike:
         geojson = self.location.geojson
         geojson['properties'] = asdict(self)
         del geojson['properties']['location']
-        geojson['properties']['created'] = geojson['properties']['created'].isoformat()
+        if geojson['properties']['created']:
+            geojson['properties']['created'] = geojson['properties']['created'].isoformat()
         geojson['id'] = '-'.join([
             geojson['properties']['provider'],
-            geojson['properties']['bike_id'],
+            str(geojson['properties']['bike_id']),
             str(geojson['properties']['location_id']),
         ])
         return geojson
 
     @classmethod
-    def from_sobi_json(cls, bike):
+    def from_gbfs_json(cls, bike, provider):
         return cls(
-            provider='JUMP',
+            provider=provider,
             bike_id=bike['bike_id'],
             location=Point(
                 x=bike['lon'],
+                y=bike['lat'],
+                srid=4326,
+            ),
+            raw=json.dumps(bike),
+        )
+
+    @classmethod
+    def from_limebike_json(cls, bike):
+        return cls(
+            provider='limebike',
+            bike_id=bike['id'],
+            location=Point(
+                x=bike['attributes']['longitude'],
+                y=bike['attributes']['latitude'],
+                srid=4326,
+            ),
+            raw=json.dumps(bike),
+        )
+
+    @classmethod
+    def from_ofo_json(cls, bike):
+        return cls(
+            provider='ofo',
+            bike_id=None,
+            location=Point(
+                x=bike['lng'],
                 y=bike['lat'],
                 srid=4326,
             ),
@@ -50,6 +77,7 @@ class Bike:
                 y=bike['distY'],
                 srid=4326,
             ),
+            raw=json.dumps(bike),
         )
 
 
@@ -62,8 +90,16 @@ class Bikes(UserList):
         }
 
     @classmethod
-    def from_sobi_json(cls, json):
-        return cls([Bike.from_sobi_json(bike) for bike in json['data']['bikes']])
+    def from_gbfs_json(cls, json, provider):
+        return cls([Bike.from_gbfs_json(bike, provider) for bike in json['data']['bikes']])
+
+    @classmethod
+    def from_limebike_json(cls, json):
+        return cls([Bike.from_limebike_json(bike) for bike in json['data']])
+
+    @classmethod
+    def from_ofo_json(cls, json):
+        return cls([Bike.from_ofo_json(bike) for bike in json['values']['cars']])
 
     @classmethod
     def from_mobike_json(cls, json):
