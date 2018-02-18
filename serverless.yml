@@ -102,6 +102,7 @@ functions:
 
   mobike_all:
     handler: bikefinder/handlers.mobike_all
+    timeout: 30
     events:
       - http:
           path: /mobike_all

@@ -55,10 +55,10 @@ class Bike:
         )
 
     @classmethod
-    def from_ofo_json(cls, bike):
+    def from_ofo_json(cls, bike, batch_id):
         return cls(
             provider='ofo',
-            bike_id=None,
+            bike_id=batch_id, # since we can't ID bikes, at least makes batches of bikes correlated
             location=Point(
                 x=bike['lng'],
                 y=bike['lat'],
@@ -99,7 +99,9 @@ class Bikes(UserList):
 
     @classmethod
     def from_ofo_json(cls, json):
-        return cls([Bike.from_ofo_json(bike) for bike in json['values']['cars']])
+        # since we can't ID bikes, at least makes batches of bikes correlated
+        batch_id = f'ofo-{datetime.utcnow().isoformat()}'
+        return cls([Bike.from_ofo_json(bike, batch_id) for bike in json['values']['cars']])
 
     @classmethod
     def from_mobike_json(cls, json):
