@@ -109,8 +109,8 @@ html, body, #map {
 .zoomed-out .leaflet-marker-icon {
     height: 10px !important;
     width: 10px !important;
-    margin-top: -5px !important;
-    margin-left: -5px !important;
+    margin-top: -7px !important;
+    margin-left: -7px !important;
     border-radius: 10px;
     background: black;
     border: 2px solid white;
@@ -163,4 +163,8 @@ html, body, #map {
 .zoomed-out .leaflet-marker-icon.zagster100 {
     background: #007db5;
     border: 2px solid white;
+}
+
+.zoomed-out .leaflet-popup {
+    margin-bottom: -22px;
 }

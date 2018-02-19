@@ -121,7 +121,7 @@
               return L.marker(latlng, {
                 icon: L.divIcon({
                   className: `${system}${percentBikes!==undefined?percentBikes:''}`,
-                  popupAnchor: [0, -16],
+                  popupAnchor: [0, -48],
                 }),
               }).bindPopup(`
                 <div>
