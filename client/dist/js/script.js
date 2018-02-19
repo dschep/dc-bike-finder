@@ -3,12 +3,6 @@
     ? 'https://2xzl9z8rqc.execute-api.us-east-1.amazonaws.com/prod'
     : 'https://wahzhpvf98.execute-api.us-east-1.amazonaws.com/dev';
   let userHasDragged = false;
-  const icon = iconName => L.icon({
-    iconUrl: `img/${iconName}.png`,
-    iconSize: [48, 48],
-    iconAnchor: [24, 48],
-    popupAnchor: [0, -48],
-  });
   let location;
   const markers = {
     mobike: L.layerGroup(),
@@ -125,7 +119,10 @@
               const percentBikes = properties.num_bikes_available && Math.round(
                 properties.num_bikes_available/properties.capacity*10) * 10;
               return L.marker(latlng, {
-                icon: icon(`${system}${percentBikes!==undefined?percentBikes:''}`),
+                icon: L.divIcon({
+                  className: `${system}${percentBikes!==undefined?percentBikes:''}`,
+                  popupAnchor: [0, -16],
+                }),
               }).bindPopup(`
                 <div>
                   <h3>${properties.name||system}</h3>
@@ -168,6 +165,15 @@
     updateMarkers(true);
   });
   map.on('dragend', () => {userHasDragged = true;});
+
+  map.on('zoomend', (e) => {
+    if (map.getZoom() < 14) {
+      document.getElementById('map').classList.add('zoomed-out');
+    } else {
+      document.getElementById('map').classList.remove('zoomed-out');
+    }
+    
+  })
 
   L.control.layers({}, markers).addTo(map);
 

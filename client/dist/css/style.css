@@ -10,3 +10,157 @@ html, body, #map {
 .leaflet-control-locate a {
     padding: 0 !important;
 }
+
+.leaflet-marker-icon {
+    height: 48px !important;
+    width: 48px !important;
+    margin-top: -48px !important;
+    margin-left: -24px !important;
+    background-size: 48px 48px;
+}
+.leaflet-marker-icon.jump {
+    background-image: url(../img/jump.png);
+}
+
+.leaflet-marker-icon.spin {
+    background-image: url(../img/spin.png);
+}
+
+.leaflet-marker-icon.limebike {
+    background-image: url(../img/limebike.png);
+}
+
+.leaflet-marker-icon.mobike {
+    background-image: url(../img/mobike.png);
+}
+
+.leaflet-marker-icon.ofo {
+    background-image: url(../img/ofo.png);
+}
+
+.leaflet-marker-icon.cabi0 {
+    background-image: url(../img/cabi0.png);
+}
+.leaflet-marker-icon.cabi10 {
+    background-image: url(../img/cabi10.png);
+}
+.leaflet-marker-icon.cabi20 {
+    background-image: url(../img/cabi20.png);
+}
+.leaflet-marker-icon.cabi30 {
+    background-image: url(../img/cabi30.png);
+}
+.leaflet-marker-icon.cabi40 {
+    background-image: url(../img/cabi40.png);
+}
+.leaflet-marker-icon.cabi50 {
+    background-image: url(../img/cabi50.png);
+}
+.leaflet-marker-icon.cabi60 {
+    background-image: url(../img/cabi60.png);
+}
+.leaflet-marker-icon.cabi70 {
+    background-image: url(../img/cabi70.png);
+}
+.leaflet-marker-icon.cabi80 {
+    background-image: url(../img/cabi80.png);
+}
+.leaflet-marker-icon.cabi90 {
+    background-image: url(../img/cabi90.png);
+}
+.leaflet-marker-icon.cabi100 {
+    background-image: url(../img/cabi100.png);
+}
+
+.leaflet-marker-icon.zagster0 {
+    background-image: url(../img/zagster0.png);
+}
+.leaflet-marker-icon.zagster10 {
+    background-image: url(../img/zagster10.png);
+}
+.leaflet-marker-icon.zagster20 {
+    background-image: url(../img/zagster20.png);
+}
+.leaflet-marker-icon.zagster30 {
+    background-image: url(../img/zagster30.png);
+}
+.leaflet-marker-icon.zagster40 {
+    background-image: url(../img/zagster40.png);
+}
+.leaflet-marker-icon.zagster50 {
+    background-image: url(../img/zagster50.png);
+}
+.leaflet-marker-icon.zagster60 {
+    background-image: url(../img/zagster60.png);
+}
+.leaflet-marker-icon.zagster70 {
+    background-image: url(../img/zagster70.png);
+}
+.leaflet-marker-icon.zagster80 {
+    background-image: url(../img/zagster80.png);
+}
+.leaflet-marker-icon.zagster90 {
+    background-image: url(../img/zagster90.png);
+}
+.leaflet-marker-icon.zagster100 {
+    background-image: url(../img/zagster100.png);
+}
+
+.zoomed-out .leaflet-marker-icon {
+    height: 10px !important;
+    width: 10px !important;
+    margin-top: -5px !important;
+    margin-left: -5px !important;
+    border-radius: 10px;
+    background: black;
+    border: 2px solid white;
+}
+
+.zoomed-out .leaflet-marker-icon.jump {
+    background: black;
+    border: 2px solid white;
+}
+.zoomed-out .leaflet-marker-icon.ofo {
+    background: #ffe300;
+    border: 2px solid black;
+}
+.zoomed-out .leaflet-marker-icon.spin {
+    background: #f37406;
+    border: 2px solid white;
+}
+.zoomed-out .leaflet-marker-icon.mobike {
+    background: #da4431;
+    border: 2px solid white;
+}
+.zoomed-out .leaflet-marker-icon.limebike {
+    background: #25d101;
+    border: 2px solid #bff000;
+}
+.zoomed-out .leaflet-marker-icon.cabi0,
+.zoomed-out .leaflet-marker-icon.cabi10,
+.zoomed-out .leaflet-marker-icon.cabi20,
+.zoomed-out .leaflet-marker-icon.cabi30,
+.zoomed-out .leaflet-marker-icon.cabi40,
+.zoomed-out .leaflet-marker-icon.cabi50,
+.zoomed-out .leaflet-marker-icon.cabi60,
+.zoomed-out .leaflet-marker-icon.cabi70,
+.zoomed-out .leaflet-marker-icon.cabi80,
+.zoomed-out .leaflet-marker-icon.cabi90,
+.zoomed-out .leaflet-marker-icon.cabi100 {
+    background: #ef4135;
+    border: 2px solid #fdda01;
+}
+.zoomed-out .leaflet-marker-icon.zagster0,
+.zoomed-out .leaflet-marker-icon.zagster10,
+.zoomed-out .leaflet-marker-icon.zagster20,
+.zoomed-out .leaflet-marker-icon.zagster30,
+.zoomed-out .leaflet-marker-icon.zagster40,
+.zoomed-out .leaflet-marker-icon.zagster50,
+.zoomed-out .leaflet-marker-icon.zagster60,
+.zoomed-out .leaflet-marker-icon.zagster70,
+.zoomed-out .leaflet-marker-icon.zagster80,
+.zoomed-out .leaflet-marker-icon.zagster90,
+.zoomed-out .leaflet-marker-icon.zagster100 {
+    background: #007db5;
+    border: 2px solid white;
+}
