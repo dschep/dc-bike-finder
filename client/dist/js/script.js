@@ -167,10 +167,16 @@
   map.on('dragend', () => {userHasDragged = true;});
 
   map.on('zoomend', (e) => {
-    if (map.getZoom() < 14) {
+    console.log(map.getZoom())
+    if (map.getZoom() == 14) {
+      document.getElementById('map').classList.remove('zoomed-out');
+      document.getElementById('map').classList.add('zoomed-md');
+    } else if (map.getZoom() < 14) {
       document.getElementById('map').classList.add('zoomed-out');
+      document.getElementById('map').classList.remove('zoomed-md');
     } else {
       document.getElementById('map').classList.remove('zoomed-out');
+      document.getElementById('map').classList.remove('zoomed-md');
     }
     
   })

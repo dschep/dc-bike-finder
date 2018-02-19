@@ -18,6 +18,13 @@ html, body, #map {
     margin-left: -24px !important;
     background-size: 48px 48px;
 }
+.zoomed-md .leaflet-marker-icon {
+    height: 32px !important;
+    width: 32px !important;
+    margin-top: -32px !important;
+    margin-left: -16px !important;
+    background-size: 32px 32px;
+}
 .leaflet-marker-icon.jump {
     background-image: url(../img/jump.png);
 }
