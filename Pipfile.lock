@@ -38,17 +38,17 @@
         },
         "boto3": {
             "hashes": [
-                "sha256:9a3afe03c38e367fd78d3cb69f53f50d2b06963d9aada70291febc47b3bc52d2",
-                "sha256:a598dfcc92468ca883072569111e6900c146b5f691f735cc528c7c3bd6394e63"
+                "sha256:68a5219f64790e663957e5ceb0162c3c3c6b0115ead68e50b7134c4d34b875c0",
+                "sha256:74e38e9fd0d6450d8a95dae2158cb6f4c7279bb3249b486b4ebe00819db643b9"
             ],
-            "version": "==1.5.34"
+            "version": "==1.5.35"
         },
         "botocore": {
             "hashes": [
-                "sha256:c204cc95da5b7e583a37417640d152bddde4b9940aac379c56849c339782a021",
-                "sha256:ebefb24be37ef8e972c8fcd6be8d219a740559942f8e23dd12f09348b7556be9"
+                "sha256:fe78e5944701c59178bc3a0968070636039de434741ef5acda41d99f9b72ceac",
+                "sha256:fe0b45216e3a34507aefdf7a67bf53f9303abb23ba4b1899824d16ecfa0433fd"
             ],
-            "version": "==1.8.48"
+            "version": "==1.8.49"
         },
         "certifi": {
             "hashes": [
@@ -226,9 +226,9 @@
         },
         "sqlalchemy": {
             "hashes": [
-                "sha256:9e9ec143e2e246f385cfb2de8daa89d2fa466279addcb7be9e102988fdf33d24"
+                "sha256:6997507af46b10630e13b605ac278b78885fd683d038896dbee0e7ec41d809d2"
             ],
-            "version": "==1.2.3"
+            "version": "==1.2.4"
         },
         "tablib": {
             "hashes": [
