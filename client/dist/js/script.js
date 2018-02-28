@@ -166,8 +166,7 @@
   });
   map.on('dragend', () => {userHasDragged = true;});
 
-  map.on('zoomend', (e) => {
-    console.log(map.getZoom())
+  const onZoom = () => {
     if (map.getZoom() == 14) {
       document.getElementById('map').classList.remove('zoomed-out');
       document.getElementById('map').classList.add('zoomed-md');
@@ -178,8 +177,9 @@
       document.getElementById('map').classList.remove('zoomed-out');
       document.getElementById('map').classList.remove('zoomed-md');
     }
-    
-  })
+  };
+  map.on('zoomend', onZoom);
+  onZoom();
 
   L.control.layers({}, markers).addTo(map);
 
