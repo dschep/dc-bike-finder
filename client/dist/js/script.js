@@ -71,7 +71,7 @@
       jump: () => fetch('https://dc.jumpmobility.com/opendata/free_bike_status.json', {cors: true})
         .then(resp => resp.json())
         .then(bikesGBFS2GeoJSON),
-      ofo: (location) => !location?Promise.resolve([]):fetch(`${ORIGIN}/ofo?longitude=${location.lng}&latitude=${location.lat}`)
+      ofo: (location) => fetch(`${ORIGIN}/ofo?longitude=${location.lng}&latitude=${location.lat}`)
         .then(resp => resp.json())
         .then(({values}) => values.cars.map(({lat, lng}) => ({
           longitude: lng,
