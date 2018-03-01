@@ -38,17 +38,17 @@
         },
         "boto3": {
             "hashes": [
-                "sha256:f244c9f3a9e0a6492dd58eb2ef8dd7e305f744f9f9ca7b83ba4e9165d2d5ad38",
-                "sha256:de924f18c50a496df7298ed462a2673613b384351599624b33175207722dc5bb"
+                "sha256:1576a72dd1a6435b29b41d541411fcabcef2777de9abebc50d01046ca24447f9",
+                "sha256:0537aa3c840b2a6c9cdc53704b1ca27c19f1850e16056db1f6241917a5eee648"
             ],
-            "version": "==1.6.1"
+            "version": "==1.6.2"
         },
         "botocore": {
             "hashes": [
-                "sha256:7778128a12f886fc5e86ea5e9ff81cd55aa5b33272e8da08e530b67d39a9acc6",
-                "sha256:2a673d9289fc5d14b45fa904673d8f6d226ebfc238c0f354ac8d4e8955329152"
+                "sha256:eda173b250d68b58d9de9f049fd519a3bd68cfdc79a390c5965b986e0eb7346f",
+                "sha256:4957da363f0a903767257b7ecc74396225fc2e736ba663c2f465ca9795a5785a"
             ],
-            "version": "==1.9.1"
+            "version": "==1.9.2"
         },
         "certifi": {
             "hashes": [
