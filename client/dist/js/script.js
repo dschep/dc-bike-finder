@@ -71,20 +71,16 @@
       jump: () => fetch('https://dc.jumpmobility.com/opendata/free_bike_status.json', {cors: true})
         .then(resp => resp.json())
         .then(bikesGBFS2GeoJSON),
-      ofo: (location) => fetch(`${ORIGIN}/ofo?longitude=${location.lng}&latitude=${location.lat}`)
+      ofo: (location) => fetch(`${ORIGIN}/ofo`)
         .then(resp => resp.json())
         .then(({values}) => values.cars.map(({lat, lng}) => ({
           longitude: lng,
           latitude: lat,
         })))
         .then(arrayFlatObjects2GeoJSON),
-      mobike: (location) => !location?Promise.resolve([]):fetch(`${ORIGIN}/mobike?longitude=${location.lng}&latitude=${location.lat}`)
+      mobike: () => fetch(`${ORIGIN}/mobike`, {cors: true})
         .then(resp => resp.json())
-        .then(({object}) => object.map(({distX, distY}) => ({
-          longitude: distX,
-          latitude: distY,
-        })))
-        .then(arrayFlatObjects2GeoJSON),
+        .then(bikesGBFS2GeoJSON),
       limebike: () => fetch(`${ORIGIN}/limebike`)
         .then(resp => resp.json())
         .then(({data}) => data.map(({attributes: {latitude, longitude}}) => ({
@@ -157,7 +153,7 @@
       enableHighAccuracy: true,
       watch: true,
     },
-  }).addTo(map).start();
+  }).addTo(map);
   map.on('locationfound', function({latlng}) {
     if (!userHasDragged)
       map.setView(latlng, 15);

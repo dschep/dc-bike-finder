@@ -49,6 +49,14 @@ def scrape_spin(event, context):
 
 @no_retry_on_failure
 @database
+def scrape_mobike_gbfs(event, context):
+    resp = requests.get('https://mobike.com/us/gbfs/v1/free_bike_status')
+    bikes = Bikes.from_gbfs_json(resp.json(), 'mobike')
+    save_to_db(bikes, context.db)
+    return bikes.geojson
+
+@no_retry_on_failure
+@database
 def scrape_limebike(event, context):
     resp = requests.get(
         LIMEBIKE_URL,

@@ -9,6 +9,7 @@ from bikefinder.util import database, search_points
 
 
 BIKESHARE_URL = 'http://feeds.capitalbikeshare.com/stations/stations.json'
+MOBIKE_GBFS_URL = 'https://mobike.com/us/gbfs/v1/free_bike_status'
 MOBIKE_URL = 'https://mwx.mobike.com/mobike-api/rent/nearbyBikesInfo.do'
 LIMEBIKE_URL = 'https://lime.bike/api/partners/v1/bikes'
 LIMEBIKE_HEADERS = {'Authorization': 'Bearer limebike-PMc3qGEtAAXqJa'}
@@ -30,6 +31,13 @@ def bikeshare_proxy(event, context):
     resp = requests.get(BIKESHARE_URL)
     return resp.json()
 
+
+@cors_headers(origin=os.environ.get('CORS_ORIGIN', 'localhost'),
+              credentials=True)
+@json_http_resp
+def mobike_gbfs_proxy(event, context):
+    resp = requests.get(MOBIKE_GBFS_URL)
+    return resp.json()
 
 @cors_headers(origin=os.environ.get('CORS_ORIGIN', 'localhost'),
               credentials=True)

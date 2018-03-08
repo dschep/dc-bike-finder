@@ -55,7 +55,7 @@ functions:
           path: /cabi
           method: get
   mobike:
-    handler: bikefinder/handlers.mobike_proxy
+    handler: bikefinder/handlers.mobike_gbfs_proxy
     events:
       - http:
           path: /mobike
@@ -100,14 +100,6 @@ functions:
           path: /jump
           method: get
 
-  mobike_all:
-    handler: bikefinder/handlers.mobike_all
-    timeout: 30
-    events:
-      - http:
-          path: /mobike_all
-          method: get
-
   scrape_jump:
     handler: bikefinder/scraper.scrape_jump
     timeout: 300
@@ -129,7 +121,7 @@ functions:
     events: ${self:custom.${self:custom.stage}.schedules.scrape}
 
   scrape_mobike:
-    handler: bikefinder/scraper.scrape_mobike
+    handler: bikefinder/scraper.scrape_mobike_gbfs
     timeout: 300
     events: ${self:custom.${self:custom.stage}.schedules.scrape}
 
