@@ -3,6 +3,7 @@
         "hash": {
             "sha256": "f5b809700252dd83416b6b68bf3a82fcc3f634ed28a4e54c101924999ee1bad6"
         },
+        "pipfile-spec": 6,
         "requires": {
             "python_version": "3.6"
         },
@@ -24,18 +25,18 @@
         },
         "boto3": {
             "hashes": [
-                "sha256:0aee3e64b70301f92001237efc162bef118a85abe1d2828f1e3a1750840f37f7",
-                "sha256:0bbcba8ff9391e54ddb5d58289a1e0d7e58674ec2a5f16d7ae46676c8261405f"
+                "sha256:13ad5f64a247d655a27dca83274588e9d14cba61b38d3d4fd2b011b7197d88dd",
+                "sha256:a56b21efbc994580fc9cef454f0f949745c152326f939aed6609d1c47b2a0f8f"
             ],
             "index": "pypi",
-            "version": "==1.6.9"
+            "version": "==1.7.4"
         },
         "botocore": {
             "hashes": [
-                "sha256:0901bdf8ce9e01d68fc2c7f8049f5b0629bff8270f46b145525700172a4870e6",
-                "sha256:1605440eb58c04d9699b2d9795c39fb4761e608eec42e105deab7149a15d1b09"
+                "sha256:5602738392ecde5c02a06a3b02de07171f440a44cdfef0aadff4b59567359607",
+                "sha256:77f2869b8c27afbab78b72ce6b74c75923421f364c7a0153ac1a38858c59cd91"
             ],
-            "version": "==1.9.9"
+            "version": "==1.10.4"
         },
         "certifi": {
             "hashes": [
@@ -114,9 +115,9 @@
         },
         "openpyxl": {
             "hashes": [
-                "sha256:c875fbefae29c4ac9ceaa88470b682834495173cbe9cd37e7286285b7fbc2602"
+                "sha256:63165adcc806a5c281febb344f3594541f778f05b99a3a5e802941a3c0a85f71"
             ],
-            "version": "==2.5.1"
+            "version": "==2.5.2"
         },
         "postgis": {
             "hashes": [
@@ -213,9 +214,9 @@
         },
         "sqlalchemy": {
             "hashes": [
-                "sha256:249000654107a420a40200f1e0b555a79dfd4eff235b2ff60bc77714bd045f2d"
+                "sha256:7cb00cc9b9f92ef8b4391c8a2051f81eeafefe32d63c6b395fd51401e9a39edb"
             ],
-            "version": "==1.2.5"
+            "version": "==1.2.6"
         },
         "tablib": {
             "hashes": [
