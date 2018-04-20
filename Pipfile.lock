@@ -102,10 +102,11 @@
         },
         "lambda-decorators": {
             "hashes": [
-                "sha256:1bc738b53a144b0775ee9a68a7b83e1c857230fb9f72e1416bd72fb70a03a8ad",
-                "sha256:7651fc6a825c9c92f689d2d6f1a7313bf98a6d2a1a896ad431e97eb06f765a58"
+                "sha256:6af196f79e02b2129961c1e4394b6e9dc4b4d0899f552279650bb1f1e0d61f94",
+                "sha256:906aa60049c594c7363f0bb10ebb6911cd4ef3a345b4572dfdc64e835fe95c6f"
             ],
-            "version": "==0.1"
+            "index": "pypi",
+            "version": "==0.2"
         },
         "odfpy": {
             "hashes": [
