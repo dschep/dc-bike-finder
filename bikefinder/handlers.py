@@ -120,34 +120,20 @@ def mbike_proxy(event, context):
               credentials=True)
 @json_http_resp
 @database
-def jump(event, context):
-    return Bikes(Bike(**record) for record in context.db.query(
-        "select * from bikes where provider='JUMP'")).geojson
-
-
-@cors_headers(origin=os.environ.get('CORS_ORIGIN', 'localhost'),
-              credentials=True)
-@json_http_resp
-@database
-def mobike_all(event, context):
-    return Bikes(Bike(**record) for record in context.db.query(
-        "select * from bikes where provider='mobike'")).geojson
-
-
-@cors_headers(origin=os.environ.get('CORS_ORIGIN', 'localhost'),
-              credentials=True)
-@json_http_resp
-def search_pattern(event, context):
-    return {
-        'type': 'FeatureCollection',
-        'features': [
-            {
-                'type': 'Feature',
-                'geometry': {
-                    'type': 'Point',
-                    'coordinates': [lng, lat],
-                },
-            }
-            for lat, lng in search_points()
-        ]
-    }
+def bikes_from_db(event, context):
+    if event['pathParameters']['provider'] == 'all':
+        return [(r.location.y, r.location.x, r.count) for r in context.db.query(
+            """
+            select location, count(*) from bike_locations
+            where created > (now()-'1day'::interval)
+            group by location
+            """)]
+    else:
+        return [(r.location.y, r.location.x, r.count) for r in context.db.query(
+            """
+            select location, count(*) from bike_locations
+            where provider=:provider and created > (now()-'1week'::interval)
+            group by location
+            """,
+            provider=event['pathParameters']['provider'],
+        )]

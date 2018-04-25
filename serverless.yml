@@ -93,45 +93,52 @@ functions:
           path: /mbike
           method: get
 
-  jump:
-    handler: bikefinder/handlers.jump
-    events:
-      - http:
-          path: /jump
-          method: get
-
   scrape_jump:
     handler: bikefinder/scraper.scrape_jump
     timeout: 300
     events: ${self:custom.${self:custom.stage}.schedules.scrape}
+    stages:
+      - dev
 
   scrape_spin:
     handler: bikefinder/scraper.scrape_spin
     timeout: 300
     events: ${self:custom.${self:custom.stage}.schedules.scrape}
+    stages:
+      - dev
 
   scrape_limebike:
     handler: bikefinder/scraper.scrape_limebike
     timeout: 300
     events: ${self:custom.${self:custom.stage}.schedules.scrape}
+    stages:
+      - dev
 
   scrape_ofo:
     handler: bikefinder/scraper.scrape_ofo
     timeout: 300
     events: ${self:custom.${self:custom.stage}.schedules.scrape}
+    stages:
+      - dev
 
   scrape_mobike:
     handler: bikefinder/scraper.scrape_mobike_gbfs
     timeout: 300
     events: ${self:custom.${self:custom.stage}.schedules.scrape}
+    stages:
+      - dev
 
-  search_pattern:
-    handler: bikefinder/handlers.search_pattern
+  bikes_from_db:
+    handler: bikefinder/handlers.bikes_from_db
+    timeout: 30
     events:
       - http:
-          path: /points
+          path: /bikes_from_db/{provider}
           method: get
+    stages:
+      - dev
 
 plugins:
   - serverless-finch
   - serverless-python-requirements
+  - serverless-plugin-select
