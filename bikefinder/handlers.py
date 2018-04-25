@@ -132,7 +132,7 @@ def bikes_from_db(event, context):
         return [(r.location.y, r.location.x, r.count) for r in context.db.query(
             """
             select location, count(*) from bike_locations
-            where provider=:provider and created > (now()-'1week'::interval)
+            where provider=:provider and created > (now()-'1day'::interval)
             group by location
             """,
             provider=event['pathParameters']['provider'],
