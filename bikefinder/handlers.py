@@ -19,8 +19,6 @@ OFO_URL = 'http://ofo-global.open.ofo.com/api/bike'
 OFO_DATA = {
     'token':'c902b87e3ce8f9f95f73fe7ee14e81fe',
     'name':'Washington',
-    'lat': 38.894432,
-    'lng': -77.013655,
 }
 MBIKE_URL = 'https://zapi.zagster.com/api/v1/bikeshares/7768436bbb7442b809bce34c/stations'
 
