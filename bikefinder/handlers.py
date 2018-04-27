@@ -1,4 +1,5 @@
 import os
+import json
 
 import boto3
 import requests
@@ -120,20 +121,19 @@ def mbike_proxy(event, context):
               credentials=True)
 @json_http_resp
 @database
-def bikes_from_db(event, context):
-    if event['pathParameters']['provider'] == 'all':
-        return [(r.location.y, r.location.x, r.count) for r in context.db.query(
+def bikes_from_db_to_s3(event, context):
+    for provider in ['JUMP', 'limebike', 'spin', 'mobike']:
+        data = [(r.location.y, r.location.x, r.count) for r in context.db.query(
             """
             select location, count(*) from bike_locations
-            where created > (now()-'1day'::interval)
-            group by location
-            """)]
-    else:
-        return [(r.location.y, r.location.x, r.count) for r in context.db.query(
-            """
-            select location, count(*) from bike_locations
-            where provider=:provider and created > (now()-'1day'::interval)
+            where provider=:provider and created > (now()-'5day'::interval)
             group by location
             """,
-            provider=event['pathParameters']['provider'],
+            provider=provider,
         )]
+        boto3.client('s3').put_object(
+            Body=json.dumps(data),
+            Bucket='bikehero-labs',
+            Key=f"{provider}.json",
+            ACL='public-read',
+        )

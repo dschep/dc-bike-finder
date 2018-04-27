@@ -21,6 +21,9 @@ provider:
     - Effect: Allow
       Action:  kms:Decrypt
       Resource: ${self:custom.service.awsKmsKeyArn}
+    - Effect: Allow
+      Action:  s3:PutObject
+      Resource: arn:aws:s3:::bikehero-labs
 
 custom:
   # work around for ${self:service} not working
@@ -128,13 +131,11 @@ functions:
     stages:
       - dev
 
-  bikes_from_db:
-    handler: bikefinder/handlers.bikes_from_db
-    timeout: 30
+  bikes_from_db_to_s3:
+    handler: bikefinder/handlers.bikes_from_db_to_s3
+    timeout: 300
     events:
-      - http:
-          path: /bikes_from_db/{provider}
-          method: get
+      - schedule: 'rate(1 day)'
     stages:
       - dev
 
@@ -142,3 +143,18 @@ plugins:
   - serverless-finch
   - serverless-python-requirements
   - serverless-plugin-select
+
+resources:
+  Resources:
+    LabsBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: bikehero-labs
+        CorsConfiguration:
+          CorsRules:
+            - AllowedHeaders:
+                - "*"
+              AllowedMethods:
+                - GET
+              AllowedOrigins:
+                - "*"
