@@ -9,21 +9,6 @@ provider:
   environment:
     CORS_ORIGIN: ${self:custom.${self:custom.stage}.corsOrigin}
     STAGE: ${self:custom.stage}
-  iamRoleStatements:
-    - Effect: Allow
-      Action: ssm:GetParameter
-      Resource:
-        Fn::Sub: arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/${self:custom.service.name}/${self:custom.stage}/*
-    - Effect: Allow
-      Action: lambda:InvokeFunction
-      Resource:
-        Fn::Sub: arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${self:custom.service.name}-${self:custom.stage}-scrape_mobike
-    - Effect: Allow
-      Action:  kms:Decrypt
-      Resource: ${self:custom.service.awsKmsKeyArn}
-    - Effect: Allow
-      Action:  s3:PutObject
-      Resource: arn:aws:s3:::bikehero-labs
 
 custom:
   # work around for ${self:service} not working
@@ -36,13 +21,8 @@ custom:
   # per stage configs
   prod:
     corsOrigin: https://share.bikehero.io
-    schedules:
-      scrape: []
   dev:
     corsOrigin: '*'
-    schedules:
-      scrape:
-        - schedule: 'rate(10 minutes)'
 
 package:
   include:
@@ -75,12 +55,6 @@ functions:
       - http:
           path: /spin
           method: get
-  ofo_request_token:
-    handler: bikefinder/handlers.ofo_request_token
-    timeout: 30
-  ofo_login_with_token:
-    handler: bikefinder/handlers.ofo_login_with_token
-    timeout: 30
   ofo:
     handler: bikefinder/handlers.ofo_proxy
     timeout: 30
@@ -96,65 +70,6 @@ functions:
           path: /mbike
           method: get
 
-  scrape_jump:
-    handler: bikefinder/scraper.scrape_jump
-    timeout: 300
-    events: ${self:custom.${self:custom.stage}.schedules.scrape}
-    stages:
-      - dev
-
-  scrape_spin:
-    handler: bikefinder/scraper.scrape_spin
-    timeout: 300
-    events: ${self:custom.${self:custom.stage}.schedules.scrape}
-    stages:
-      - dev
-
-  scrape_limebike:
-    handler: bikefinder/scraper.scrape_limebike
-    timeout: 300
-    events: ${self:custom.${self:custom.stage}.schedules.scrape}
-    stages:
-      - dev
-
-  scrape_ofo:
-    handler: bikefinder/scraper.scrape_ofo
-    timeout: 300
-    events: ${self:custom.${self:custom.stage}.schedules.scrape}
-    stages:
-      - dev
-
-  scrape_mobike:
-    handler: bikefinder/scraper.scrape_mobike_gbfs
-    timeout: 300
-    events: ${self:custom.${self:custom.stage}.schedules.scrape}
-    stages:
-      - dev
-
-  bikes_from_db_to_s3:
-    handler: bikefinder/handlers.bikes_from_db_to_s3
-    timeout: 300
-    events:
-      - schedule: 'rate(1 day)'
-    stages:
-      - dev
-
 plugins:
   - serverless-finch
   - serverless-python-requirements
-  - serverless-plugin-select
-
-resources:
-  Resources:
-    LabsBucket:
-      Type: AWS::S3::Bucket
-      Properties:
-        BucketName: bikehero-labs
-        CorsConfiguration:
-          CorsRules:
-            - AllowedHeaders:
-                - "*"
-              AllowedMethods:
-                - GET
-              AllowedOrigins:
-                - "*"
