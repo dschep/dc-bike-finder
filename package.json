@@ -8,7 +8,7 @@
   "devDependencies": {
     "serverless": "github:serverless/serverless",
     "serverless-crypt": "marcy-terui/serverless-crypt",
-    "serverless-finch": "^1.1.1",
+    "serverless-finch": "^2.1.1",
     "serverless-plugin-select": "^2.0.0-rc.1",
     "serverless-python-requirements": "^4.0.1"
   }
