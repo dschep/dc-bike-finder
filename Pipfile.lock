@@ -26,18 +26,18 @@
         },
         "boto3": {
             "hashes": [
-                "sha256:75e6623e8ed65db0ae1f78191f236d44db36eb19b5389a22c5ff2621f5ee512e",
-                "sha256:9f1b5261487c65adc881661d4362b64fa7e36451fd68ae59215ced48dce57655"
+                "sha256:09f6e6e76c368c650bbd7df72a9dbb66b1fdb4ae37baf28dd8525246a4d75dd4",
+                "sha256:a3091a1d1e050785152e9a62892c457b7cb2378cf0b28246fdab93cd7857b4e2"
             ],
             "index": "pypi",
-            "version": "==1.7.32"
+            "version": "==1.7.37"
         },
         "botocore": {
             "hashes": [
-                "sha256:43cf6187e0c2b23bf42664fcb30923d6414387b36291efdebc4ceaf81671e953",
-                "sha256:f5e98da30d9dbd88aff2717766b8715c1496c1329c0f61b37cf5464e82713e2e"
+                "sha256:5ae7db25223c9d2c30e44781d48c9c3eab93019abef39e8c3f8784d0f63825c2",
+                "sha256:a909051fc9fc9a84674951cb4f54973659a53827f4e9e989cdae2a6a107bee1c"
             ],
-            "version": "==1.10.32"
+            "version": "==1.10.37"
         },
         "certifi": {
             "hashes": [
@@ -118,9 +118,9 @@
         },
         "openpyxl": {
             "hashes": [
-                "sha256:0046fca88d6731875a385bf7edd689d7c4133f829203ea615a81291de3fa48b6"
+                "sha256:9239b74faf175dc4276a5fc277655fc53c2f704ded39e680d35e6a39e1913f69"
             ],
-            "version": "==2.5.3"
+            "version": "==2.5.4"
         },
         "postgis": {
             "hashes": [
