@@ -83,10 +83,12 @@
         .then(bikesGBFS2GeoJSON),
       limebike: () => fetch(`${ORIGIN}/limebike`)
         .then(resp => resp.json())
-        .then(({data}) => data.map(({attributes: {latitude, longitude}}) => ({
-          longitude,
-          latitude,
-        })))
+        .then(({data}) => data
+          .filter(({attributes: {vehicle_type}}) => vehicle_type === 'bike')
+          .map(({attributes: {latitude, longitude}}) => ({
+            longitude,
+            latitude,
+          })))
         .then(arrayFlatObjects2GeoJSON),
       spin: () => fetch('https://web.spin.pm/api/gbfs/v1/free_bike_status', {cors: true})
         .then(resp => resp.json())
