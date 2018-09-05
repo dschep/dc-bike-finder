@@ -86,9 +86,12 @@
             pointToLayer: ({properties, geometry: {coordinates}}, latlng) => {
               const percentBikes = properties.num_bikes_available && Math.round(
                 properties.num_bikes_available/properties.capacity*10) * 10;
+              let className = `${system}${percentBikes!==undefined?percentBikes:''}`
+              if (properties.num_ebikes_available)
+                className += ' ebike';
               return L.marker(latlng, {
                 icon: L.divIcon({
-                  className: `${system}${percentBikes!==undefined?percentBikes:''}`,
+                  className,
                   popupAnchor: [0, -48],
                 }),
               }).bindPopup(`

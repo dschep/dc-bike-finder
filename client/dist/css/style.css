@@ -78,6 +78,39 @@ html, body, #map {
 .leaflet-marker-icon.cabi100 {
     background-image: url(../img/cabi100.png);
 }
+.leaflet-marker-icon.cabi0.ebike {
+    background-image: url(../img/cabie0.png);
+}
+.leaflet-marker-icon.cabi10.ebike {
+    background-image: url(../img/cabie10.png);
+}
+.leaflet-marker-icon.cabi20.ebike {
+    background-image: url(../img/cabie20.png);
+}
+.leaflet-marker-icon.cabi30.ebike {
+    background-image: url(../img/cabie30.png);
+}
+.leaflet-marker-icon.cabi40.ebike {
+    background-image: url(../img/cabie40.png);
+}
+.leaflet-marker-icon.cabi50.ebike {
+    background-image: url(../img/cabie50.png);
+}
+.leaflet-marker-icon.cabi60.ebike {
+    background-image: url(../img/cabie60.png);
+}
+.leaflet-marker-icon.cabi70.ebike {
+    background-image: url(../img/cabie70.png);
+}
+.leaflet-marker-icon.cabi80.ebike {
+    background-image: url(../img/cabie80.png);
+}
+.leaflet-marker-icon.cabi90.ebike {
+    background-image: url(../img/cabie90.png);
+}
+.leaflet-marker-icon.cabi100.ebike {
+    background-image: url(../img/cabie100.png);
+}
 
 .leaflet-marker-icon.zagster0 {
     background-image: url(../img/zagster0.png);
@@ -155,6 +188,20 @@ html, body, #map {
 .zoomed-out .leaflet-marker-icon.cabi90,
 .zoomed-out .leaflet-marker-icon.cabi100 {
     background: #ef4135;
+    border: 2px solid #fdda01;
+}
+.zoomed-out .leaflet-marker-icon.cabi0.ebike,
+.zoomed-out .leaflet-marker-icon.cabi10.ebike,
+.zoomed-out .leaflet-marker-icon.cabi20.ebike,
+.zoomed-out .leaflet-marker-icon.cabi30.ebike,
+.zoomed-out .leaflet-marker-icon.cabi40.ebike,
+.zoomed-out .leaflet-marker-icon.cabi50.ebike,
+.zoomed-out .leaflet-marker-icon.cabi60.ebike,
+.zoomed-out .leaflet-marker-icon.cabi70.ebike,
+.zoomed-out .leaflet-marker-icon.cabi80.ebike,
+.zoomed-out .leaflet-marker-icon.cabi90.ebike,
+.zoomed-out .leaflet-marker-icon.cabi100.ebike {
+    background: black;
     border: 2px solid #fdda01;
 }
 .zoomed-out .leaflet-marker-icon.zagster0,
