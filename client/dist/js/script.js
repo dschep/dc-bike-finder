@@ -5,21 +5,13 @@
   let userHasDragged = false;
   let location;
   const markers = {
-    mobike: L.layerGroup(),
     cabi: L.layerGroup(),
     jump: L.layerGroup(),
-    limebike: L.layerGroup(),
-    spin: L.layerGroup(),
-    ofo: L.layerGroup(),
     zagster: L.layerGroup(),
   };
   const updating = {
-    mobike: false,
     cabi: false,
     jump: false,
-    limebike: false,
-    spin: false,
-    ofo: false,
     zagster: false,
   }
 
@@ -71,28 +63,6 @@
       jump: () => fetch('https://dc.jumpmobility.com/opendata/free_bike_status.json', {cors: true})
         .then(resp => resp.json())
         .then(bikesGBFS2GeoJSON),
-      ofo: (location) => fetch(`${ORIGIN}/ofo`)
-        .then(resp => resp.json())
-        .then(({values}) => values.cars.map(({lat, lng}) => ({
-          longitude: lng,
-          latitude: lat,
-        })))
-        .then(arrayFlatObjects2GeoJSON),
-      mobike: () => fetch(`${ORIGIN}/mobike`, {cors: true})
-        .then(resp => resp.json())
-        .then(bikesGBFS2GeoJSON),
-      limebike: () => fetch(`${ORIGIN}/limebike`)
-        .then(resp => resp.json())
-        .then(({data}) => data
-          .filter(({attributes: {vehicle_type}}) => vehicle_type === 'bike')
-          .map(({attributes: {latitude, longitude}}) => ({
-            longitude,
-            latitude,
-          })))
-        .then(arrayFlatObjects2GeoJSON),
-      spin: () => fetch('https://web.spin.pm/api/gbfs/v1/free_bike_status', {cors: true})
-        .then(resp => resp.json())
-        .then(bikesGBFS2GeoJSON),
       zagster: (location) => fetch(`${ORIGIN}/mbike`)
         .then(resp => resp.json())
         .then(({data}) => data.map(({geo, availableDockingSpaces, bikes, name}) => ({
@@ -106,7 +76,7 @@
         .then(arrayFlatObjects2GeoJSON),
     };
 
-    ['cabi', 'jump', 'ofo', 'mobike', 'limebike', 'spin', 'zagster'].map((system) => {
+    ['cabi', 'jump', 'zagster'].map((system) => {
       updating[system] = true;
       return fetcher[system](location)
         .then((bikes) => {
@@ -127,6 +97,9 @@
                   ${properties.num_bikes_available===undefined?'':`
                   <p>
                   Bikes: ${properties.num_bikes_available}
+                  ${properties.num_ebikes_available === undefined
+                    ? ''
+                    :'- eBikes: ' + properties.num_ebikes_available}
                   -
                   Slots: ${properties.num_docks_available}
                   </p>
