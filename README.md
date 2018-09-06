@@ -2,14 +2,13 @@
 
 A webapp for finding bikeshares in DC! Currently supports:
 
- * [Capital Bikeshare](https://www.capitalbikeshare.com/)
+ * [Capital Bikeshare](https://www.capitalbikeshare.com/) - including markers for e-bikes
  * [JUMP](https://dc.jumpmobility.com/)
- * [Mobike](https://www.mobike.com/us/)
- * [Limebike](https://www.limebike.com/)
- * [Ofo](http://www.ofo.com/)
- * [Spin](https://www.spin.pm/)
 
 Hosted version at: https://share.bikehero.io/
 
 ![screenshot](.screenshot.png)
 ![screenshot](.desktopscreenshot.png)
+
+note: screenshots are from when Limebike, Spin, Mobikie, and Ofo were operating as
+bikeshare providers in DC, which they no longer do.
