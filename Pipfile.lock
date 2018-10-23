@@ -26,25 +26,25 @@
         },
         "boto3": {
             "hashes": [
-                "sha256:13723dba82f34c90611ddb3e507cbd2542070ecf4d8d96e2b3d9beb0e1a69868",
-                "sha256:580f0c3ba315a9325bd1caa789efb7f5e9d3f2adff98f981fbca10808125c1b6"
+                "sha256:137d8bf453c7daa794aa8fe094e0365287260062db88b0edc53eb061c1a2f655",
+                "sha256:aff5297d37130097e04c33dd65d885906e4012dfa2863b228b21335857d7b4e8"
             ],
             "index": "pypi",
-            "version": "==1.7.59"
+            "version": "==1.9.29"
         },
         "botocore": {
             "hashes": [
-                "sha256:839c10707b129e3e88bc0d328ffc59b771d1951600edb3a4b2875a0e0be7db1a",
-                "sha256:da78b1f4ae8b6780b28c8a245384ff3b1685fbfbf664c0da0b7f2dd3810a0199"
+                "sha256:494b351c6d1b55f6f334bd86b1a3bd2e7a10d935ae6e6eaac0a72a46b524a17d",
+                "sha256:a255db27a0b550736f684e767e263dd0bfe09e9f4a71720e6dcb78a0c5223ad0"
             ],
-            "version": "==1.10.59"
+            "version": "==1.12.29"
         },
         "certifi": {
             "hashes": [
-                "sha256:13e698f54293db9f89122b0581843a782ad0934a4fe0172d2a980ba77fc61bb7",
-                "sha256:9fa520c1bacfb634fa7af20a76bcbd3d5fb390481724c597da32c719a7dca4b0"
+                "sha256:339dc09518b07e2fa7eda5450740925974815557727d6bd35d319c1524a04a4c",
+                "sha256:6d58c986d22b038c8c0df30d639f23a3e6d172a05c3583e766f4c0b785c0986a"
             ],
-            "version": "==2018.4.16"
+            "version": "==2018.10.15"
         },
         "chardet": {
             "hashes": [
@@ -117,9 +117,9 @@
         },
         "openpyxl": {
             "hashes": [
-                "sha256:9239b74faf175dc4276a5fc277655fc53c2f704ded39e680d35e6a39e1913f69"
+                "sha256:022c0f3fa1e873cc0ba20651c54dd5e6276fc4ff150b4060723add4fc448645e"
             ],
-            "version": "==2.5.4"
+            "version": "==2.5.9"
         },
         "postgis": {
             "hashes": [
@@ -218,9 +218,9 @@
         },
         "sqlalchemy": {
             "hashes": [
-                "sha256:72325e67fb85f6e9ad304c603d83626d1df684fdf0c7ab1f0352e71feeab69d8"
+                "sha256:c5951d9ef1d5404ed04bae5a16b60a0779087378928f997a294d1229c6ca4d3e"
             ],
-            "version": "==1.2.10"
+            "version": "==1.2.12"
         },
         "tablib": {
             "hashes": [
@@ -239,6 +239,7 @@
                 "sha256:06330f386d6e4b195fbfc736b297f58c5a892e4440e54d294d7004e3a9bbea1b",
                 "sha256:cc44da8e1145637334317feebd728bd869a35285b93cbb4cca2577da7e62db4f"
             ],
+            "markers": "python_version >= '3.4'",
             "version": "==1.22"
         },
         "xlrd": {
