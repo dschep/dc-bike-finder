@@ -99,7 +99,7 @@
                   <h3>${properties.name||system}</h3>
                   ${properties.num_bikes_available===undefined?'':`
                   <p>
-                  Bikes: ${properties.num_bikes_available}
+                  Bikes: ${properties.num_ebikes_available ? properties.num_bikes_available - properties.num_ebikes_available : properties.num_bikes_available}
                   ${properties.num_ebikes_available === undefined
                     ? ''
                     :'- eBikes: ' + properties.num_ebikes_available}
