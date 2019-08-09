@@ -131,9 +131,9 @@
         },
         "openpyxl": {
             "hashes": [
-                "sha256:1d2af392cef8c8227bd2ac3ebe3a28b25aba74fd4fa473ce106065f0b73bfe2e"
+                "sha256:626d38647c063d55803ef4971c4d43226538d4e95cb6260c094e363ee33e10c7"
             ],
-            "version": "==2.6.2"
+            "version": "==2.4.11"
         },
         "postgis": {
             "hashes": [
@@ -210,11 +210,11 @@
         },
         "records": {
             "hashes": [
-                "sha256:238cba35e8efbb724493bbb195bd027d9e78db4a978597969a7af0f722ac3686",
-                "sha256:6d060a2b44ecc198d4e86efd5dab8558a2581b4019970bd8839e1604a243f57e"
+                "sha256:47e4874096f4a8f4b5bcad8c7c7cf512be36186e6e263ff3dfd750b05ff0d3c4",
+                "sha256:cdbacf52c61b4a3bc10fef1286a24a63ae95255a2e7b4e8ccb1e1f96737231ed"
             ],
             "index": "pypi",
-            "version": "==0.5.2"
+            "version": "==0.5.3"
         },
         "requests": {
             "hashes": [
@@ -242,6 +242,7 @@
             "hashes": [
                 "sha256:217e7fc52199a05851eee9b6a0883190743c4fb9c8ac4313ccfceaffd852b0ff"
             ],
+            "markers": "python_version >= '3.0'",
             "version": "==1.3.6"
         },
         "tablib": {
