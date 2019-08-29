@@ -33,18 +33,18 @@
         },
         "boto3": {
             "hashes": [
-                "sha256:3ec5b520dbd0a430cdd581a8250991fb0f21ee7e668a8928f15006b312fa86dc",
-                "sha256:8aec0247131a0db1e33d28ad13910e01e6dfa208e8ab8ee5a4095e92dbaabf45"
+                "sha256:09cf39452a8a45e6e91ba64486e1861e0d6466d50b046d445627cc1cbdde29a1",
+                "sha256:274708f2103e42fac72ad2b56681c26b70909594bef146a99d376c52df4ded04"
             ],
             "index": "pypi",
-            "version": "==1.9.204"
+            "version": "==1.9.218"
         },
         "botocore": {
             "hashes": [
-                "sha256:56cd1114e0ce35733e890b321160c8c438243f4fa54d3d074dfa6bdce4ee55aa",
-                "sha256:f86504bcc9c44d5b2e7b019f2f279b70f17b1400d2fc4775bc009ec473530cad"
+                "sha256:aba87b5c594ec33deb679eda0a19b32e654bf781ff1dd8f1b53dffcd7c8a4dd9",
+                "sha256:c66f4ffccb57dcca45b0f279e7fafc0ee83dab2a37aaeb047acb2543c8408439"
             ],
-            "version": "==1.12.204"
+            "version": "==1.12.218"
         },
         "certifi": {
             "hashes": [
@@ -75,11 +75,11 @@
         },
         "docutils": {
             "hashes": [
-                "sha256:02aec4bd92ab067f6ff27a38a38a41173bf01bed8f89157768c1573f53e474a6",
-                "sha256:51e64ef2ebfb29cae1faa133b3710143496eca21c530f3f71424d77687764274",
-                "sha256:7a4bd47eaf6596e1295ecb11361139febe29b084a87bf005bf899f9a42edc3c6"
+                "sha256:6c4f696463b79f1fb8ba0c594b63840ebd41f059e92b31957c46b74a4599b6d0",
+                "sha256:9e4d7ecfc600058e07ba661411a2b7de2fd0fafa17d1a7f7361cd47b1175c827",
+                "sha256:a2aeea129088da402665e92e0b25b04b073c04b2dce4ab65caaa38b7ce2e1a99"
             ],
-            "version": "==0.14"
+            "version": "==0.15.2"
         },
         "et-xmlfile": {
             "hashes": [
@@ -131,9 +131,9 @@
         },
         "openpyxl": {
             "hashes": [
-                "sha256:1d2af392cef8c8227bd2ac3ebe3a28b25aba74fd4fa473ce106065f0b73bfe2e"
+                "sha256:72d1ed243972cad0b3c236230083cac00d9c72804e64a2ae93d7901aec1a8f1c"
             ],
-            "version": "==2.6.2"
+            "version": "==2.6.3"
         },
         "postgis": {
             "hashes": [
@@ -240,9 +240,9 @@
         },
         "sqlalchemy": {
             "hashes": [
-                "sha256:217e7fc52199a05851eee9b6a0883190743c4fb9c8ac4313ccfceaffd852b0ff"
+                "sha256:2f8ff566a4d3a92246d367f2e9cd6ed3edeef670dcd6dda6dfdc9efed88bcd80"
             ],
-            "version": "==1.3.6"
+            "version": "==1.3.8"
         },
         "tablib": {
             "hashes": [
